@@ -1,0 +1,66 @@
+\contentsline {chapter}{摘\hskip 1em\relax 要}{I}{section*.9}%
+\contentsline {chapter}{目\hskip 1em\relax 录}{II}{section*.11}%
+\contentsline {chapter}{插图清单}{IV}{section*.13}%
+\contentsline {chapter}{附表清单}{V}{section*.15}%
+\contentsline {chapter}{\numberline {第1章}绪论}{1}{chapter.1}%
+\contentsline {subsection}{\numberline {1.0.1}智能体简介}{1}{subsection.1.0.1}%
+\contentsline {subsection}{\numberline {1.0.2}研究意义}{2}{subsection.1.0.2}%
+\contentsline {subsection}{\numberline {1.0.3}研究价值}{4}{subsection.1.0.3}%
+\contentsline {subsection}{\numberline {1.0.4}论文主要内容及章节安排}{5}{subsection.1.0.4}%
+\contentsline {chapter}{\numberline {第2章}研究背景}{6}{chapter.2}%
+\contentsline {subsection}{\numberline {2.0.1}智能体系统}{6}{subsection.2.0.1}%
+\contentsline {subsection}{\numberline {2.0.2}BDI智能体架构}{7}{subsection.2.0.2}%
+\contentsline {subsection}{\numberline {2.0.3}社会仿真场景国内外研究现状}{8}{subsection.2.0.3}%
+\contentsline {subsection}{\numberline {2.0.4}信念、计划以及动作的规范表示}{13}{subsection.2.0.4}%
+\contentsline {paragraph}{信念}{13}{paragraph*.17}%
+\contentsline {paragraph}{动作}{13}{paragraph*.18}%
+\contentsline {paragraph}{计划}{14}{paragraph*.19}%
+\contentsline {subsection}{\numberline {2.0.5}目标计划树}{14}{subsection.2.0.5}%
+\contentsline {subsection}{\numberline {2.0.6}意图进展问题}{15}{subsection.2.0.6}%
+\contentsline {chapter}{\numberline {第3章}智能体意图调度理论和方法}{17}{chapter.3}%
+\contentsline {subsection}{\numberline {3.0.1}蒙特卡洛方法}{17}{subsection.3.0.1}%
+\contentsline {subsection}{\numberline {3.0.2}蒙特卡洛树搜索（Monte-Carlo Tree Search）}{18}{subsection.3.0.2}%
+\contentsline {paragraph}{选择}{19}{paragraph*.21}%
+\contentsline {paragraph}{扩展}{19}{paragraph*.22}%
+\contentsline {paragraph}{模拟}{19}{paragraph*.23}%
+\contentsline {paragraph}{回溯}{20}{paragraph*.24}%
+\contentsline {subsection}{\numberline {3.0.3}目标计划树模型下MCTS的应用}{20}{subsection.3.0.3}%
+\contentsline {subsubsection}{\numberline {3.0.3.1}$SA$算法与BDI智能体的实践推理过程}{22}{subsubsection.3.0.3.1}%
+\contentsline {chapter}{\numberline {第4章}同时考虑实现型与维持型目标的意图进展}{23}{chapter.4}%
+\contentsline {subsection}{\numberline {4.0.1}维持型目标}{23}{subsection.4.0.1}%
+\contentsline {paragraph}{实现型目标}{24}{paragraph*.25}%
+\contentsline {paragraph}{维持型目标}{24}{paragraph*.26}%
+\contentsline {subsubsection}{\numberline {4.0.1.1}主动维持型目标}{24}{subsubsection.4.0.1.1}%
+\contentsline {subsubsection}{\numberline {4.0.1.2}被动维持型目标}{24}{subsubsection.4.0.1.2}%
+\contentsline {subsection}{\numberline {4.0.2}$SA_M$调度算法}{25}{subsection.4.0.2}%
+\contentsline {paragraph}{对扩展阶段的修改}{25}{paragraph*.27}%
+\contentsline {paragraph}{对模拟阶段的修改}{25}{paragraph*.28}%
+\contentsline {subsection}{\numberline {4.0.3}实验}{25}{subsection.4.0.3}%
+\contentsline {subsubsection}{\numberline {4.0.3.1}实验场景介绍}{25}{subsubsection.4.0.3.1}%
+\contentsline {subsubsection}{\numberline {4.0.3.2}实验设定}{26}{subsubsection.4.0.3.2}%
+\contentsline {subsubsection}{\numberline {4.0.3.3}静态环境实验}{27}{subsubsection.4.0.3.3}%
+\contentsline {paragraph}{Experiment 1}{28}{paragraph*.30}%
+\contentsline {paragraph}{Experiment 2}{28}{paragraph*.32}%
+\contentsline {paragraph}{Experiment 3}{29}{paragraph*.34}%
+\contentsline {subsubsection}{\numberline {4.0.3.4}动态环境实验}{30}{subsubsection.4.0.3.4}%
+\contentsline {paragraph}{Experiment 4}{30}{paragraph*.36}%
+\contentsline {paragraph}{Experiment 5}{31}{paragraph*.38}%
+\contentsline {paragraph}{Experiment 6}{31}{paragraph*.40}%
+\contentsline {subsection}{\numberline {4.0.4}总结}{32}{subsection.4.0.4}%
+\contentsline {chapter}{\numberline {第5章}norm约束下的意图进展}{33}{chapter.5}%
+\contentsline {chapter}{\numberline {第6章}基于时序逻辑的表示与决策方法}{34}{chapter.6}%
+\contentsline {chapter}{\numberline {第7章}结论与未来展望}{35}{chapter.7}%
+\setcounter {tocdepth}{0}
+\contentsline {chapter}{参考文献}{36}{section*.42}%
+\setcounter {tocdepth}{0}
+\contentsline {chapter}{\numberline {附录 A}补充内容}{41}{appendix.A}%
+\contentsline {section}{\numberline {A.1}图表示例}{41}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}图}{41}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}表格}{41}{subsection.A.1.2}%
+\contentsline {section}{\numberline {A.2}数学公式}{42}{section.A.2}%
+\contentsline {chapter}{致\hskip 1em\relax 谢}{43}{section*.46}%
+\contentsline {chapter}{声\hspace {1em}明}{44}{section*.48}%
+\contentsline {chapter}{个人简历、在学期间完成的相关学术成果}{45}{section*.50}%
+\contentsline {chapter}{指导教师学术评语}{46}{appendix*.56}%
+\contentsline {chapter}{答辩委员会决议书}{47}{appendix*.57}%
+\contentsfinish 
