@@ -5,9 +5,9 @@
 *.fls
 *.log
 *.out
-*.pdf
 *.gz
 *.lof
 *.lot
 *.toc
 *.xdv
+zjutthesis.pdf
