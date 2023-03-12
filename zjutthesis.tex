@@ -42,13 +42,13 @@
 % 本科生的插图索引和表格索引需要移至正文之后、参考文献前
 % \listoffiguresandtables  % 插图和附表清单（仅限研究生）
 \listoffigures           % 插图清单
-\listoftables            % 附表清单
+%% \listoftables            % 附表清单
 
 % 符号对照表
 % \input{data/denotation}
 
 % 正文部分
-%% \mainmatter
+\mainmatter % @WTF: This determines page number form?
 \input{1intro.tex}
 \input{2background.tex}
 \input{3method.tex}
