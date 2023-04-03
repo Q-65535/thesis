@@ -148,19 +148,21 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
-
-% % for pseudocode
-% \usepackage{xspace}
-
-% \usepackage{color}
-% %% \usepackage[utf8x]{inputenc}
-% \usepackage{ulem}
-% \usepackage{ctex}
+% 图片标题
+\usepackage{ctex} %引入CTEX宏包
+\usepackage{caption}
+\usepackage{bicaption}
+\captionsetup[figure][bi-second]{name=Figure} %设置图的英文编号前缀
+\captionsetup[table][bi-second]{name=Table} %设置表的英文编号前缀
 
 \newcommand{\SA}{$SA$}
 \newcommand{\SAM}{{$SA_M$}}
 \newcommand{\SAN}{{$SA_N$}}
 \newcommand{\SAT}{{$SA_T$}}
+
+
+
+
 
 
 

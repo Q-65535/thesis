@@ -76,13 +76,13 @@ LTL解析器和转换器已在\cite{DBLP:books/daglib/0020982,DBLP:journals/jlap
 \begin{figure*}[htb]
 \centering
 \includegraphics[width=0.9\textwidth]{./figs/translator}
-\caption{LTL Checker}
+\bicaption{LTL检查器}{LTL Checker}
 \label{fig:translator}
 \end{figure*}
 
 以下为基于该框架的LTL检查算法：
 \begin{algorithm} % This algorithm can also be used
-\caption{LTL Checker}\label{checker}
+\caption{LTL检查器}\label{checker}
 \begin{algorithmic}[1]
 \STATE input:$(\rho, o)$
 \STATE $l \gets getLTL(o)$
@@ -107,7 +107,7 @@ LTL解析器和转换器已在\cite{DBLP:books/daglib/0020982,DBLP:journals/jlap
 
 算法\ref{trigger}所示的触发函数用于对触发LTL对象的相应操作。
 \begin{algorithm} % This algorithm can also be used
-\caption{trigger function}\label{trigger}
+\caption{触发函数}\label{trigger}
 \begin{algorithmic}[1]
 \STATE input:$(o)$
 
@@ -155,7 +155,14 @@ LTL解析器和转换器已在\cite{DBLP:books/daglib/0020982,DBLP:journals/jlap
 在接下来的实验中，v-BDI的价值函数被设定为$\frac{\#goals}{batteryConsumption} - penaltyValue$。\SAN 算法设定为执行100次迭代（$\alpha = 100$），每次迭代执行10次的模拟（$\beta = 10$）。\SAN 的价值函数与v-BDI相同，设定为$\frac{\#goals}{batteryConsumption} - penaltyValue$。
 
 \subsection{低电池容量实验}
-以下实验中考虑智能体在低电池容量下设定的性能表现。在低电池容量设定下，智能体的电池容量被设定为40。具体实验结果如图\ref{}所示。
+以下实验中考虑智能体在低电池容量下设定的性能表现。在低电池容量设定下，智能体的电池容量被设定为40。具体实验结果如图\ref{fig:ltl_low}所示。
+
+\begin{figure*}[htb]
+\centering
+\includegraphics[width=0.9\textwidth]{./figs/ltl_low_battery}
+\bicaption{低电池容量下的实验结果}{experimental results in low battery}
+\label{fig:ltl_low}
+\end{figure*}
 
 \paragraph{惩罚值分析}
 如图所示，随着norm数量的增加，所有智能体受到的惩罚值也相应增加。RMG受到的惩罚值最大。其原因有三部分：
@@ -171,7 +178,14 @@ LTL解析器和转换器已在\cite{DBLP:books/daglib/0020982,DBLP:journals/jlap
 随着norm数量的增加，所有方法的总价值都相应降低。MCTS的性能明显优于其他方法。在norm的数量为10的情况下，当目标数量增加时，MCTS的性能只有略微下降。这是因为由于目标数量的增加，MCTS可以更好地利用多意图间的协同效应，因此，协同效应带来的优势克服了违反norm次数增加造成的危害，从而获得较高的总价值。然而，正如图中所示，当norm的数量较多时，违反norm的危害难以得到补偿。
 
 \subsection{高电池容量实验}
-以下实验中考虑智能体在高电池容量下设定的性能表现。在高电池容量设定下，智能体的电池容量被设定为120。具体实验结果如图\ref{}所示。
+以下实验中考虑智能体在高电池容量下设定的性能表现。在高电池容量设定下，智能体的电池容量被设定为120。具体实验结果如图\ref{fig:ltl_high}所示。
+
+\begin{figure*}[htb]
+\centering
+\includegraphics[width=0.9\textwidth]{./figs/ltl_high_battery}
+\bicaption{高电池容量下的实验结果}{experimental results in high battery}
+\label{fig:ltl_high}
+\end{figure*}
 
 在高电池容量设定下，这四种方法的性能变化趋势与低电池容量实验相似。明显不同之处在于，高电池容量下各个方法的性能表现相较于低电池容量都有所增加。
 \paragraph{惩罚值分析}

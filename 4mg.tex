@@ -1,4 +1,4 @@
-\chapter{同时考虑实现型与维持型目标的意图进展}\label{mg}
+\chapter{支持维持型目标的意图调度算法}\label{mg}
 本章将提出一种基于\SA 的意图调度算法\SAM ，\SAM 支持同时对实现型和维持型目标的调度。其中维持型目标考虑到了在第\ref{background}中提到的被动维持型目标和主动维持型目标。另外，本章对\SAM 的性能在动态和静态环境下进行了实验分析，并与Duff等人提出的PMG\cite{DBLP:conf/atal/DuffHT06}算法进行了比较，实验结果表明\SAM 的性能表现相对PMG有显著优势。
 \section{维持型目标}
 目前大多数对BDI智能体意图调度方面的研究主要考虑的是实现型目标，即指定某一个智能体要去达到的环境状态，一旦智能体通过执行动作达到了该指定状态，实现型目标即被抛弃。
@@ -71,7 +71,7 @@ $$<G_m,C_m,Pls,t>$$
 \centering
 \includegraphics[scale=0.4]{./figs/mg_example}
 \captionsetup{justification=centering}
-\caption{A Mars rover example}
+\bicaption{火星探测器例子}{A Mars rover example}
 \label{fig:marsrover}
 \end{figure}
 
@@ -122,7 +122,7 @@ $$<G_m,C_m,Pls,t>$$
 \centering
 \includegraphics[scale=0.4]{./figs/gX_cY_fixCap40.pdf}
 \captionsetup{justification=centering}
-\caption{Battery consumptions with fixed capacity of 40}
+\bicaption{电池容量为40下的电量消耗}{Battery consumptions with fixed capacity of 40}
 \label{fig:static1}
 \end{figure}
 
@@ -147,7 +147,7 @@ $$<G_m,C_m,Pls,t>$$
 \centering
 \includegraphics[scale=0.4]{./figs/gX_cY_fixCap60.pdf}
 \captionsetup{justification=centering}
-\caption{Battery consumptions with fixed tank capacity of 60}
+\bicaption{电池容量为60下的电量消耗}{Battery consumptions with fixed capacity of 60}
 \label{fig:static2}
 \end{figure}
 
@@ -165,7 +165,7 @@ $$<G_m,C_m,Pls,t>$$
 \centering
 \includegraphics[scale=0.4]{./figs/cX_cY_fixG10}
 \captionsetup{justification=centering}
-\caption{Battery consumptions with fixed 10 goals}
+\bicaption{目标数量为10下的电量消耗}{Battery consumptions with fixed 10 goals}
 \label{fig:static4}
 \end{figure}
 
@@ -186,7 +186,7 @@ $$<G_m,C_m,Pls,t>$$
 \centering
 \includegraphics[scale=0.4]{./figs/gX_cY_fixCap40_d}
 \captionsetup{justification=centering}
-\caption{Battery consumptions with capacity of 40 in dynamic environment}
+\bicaption{动态环境电池容量为40下的电量消耗}{Battery consumptions with capacity of 40 in dynamic environment}
 \label{fig:dynamic1}
 \end{figure}
 
@@ -205,7 +205,7 @@ NMG，RMG和PMG的性能保持不变，而基于MCTS的方法则有较为明显�
 \centering
 \includegraphics[scale=0.4]{./figs/gX_cY_fixCap60_d}
 \captionsetup{justification=centering}
-\caption{Battery consumptions with capacity of 60}
+\bicaption{动态环境电池容量为60下的电量消耗}{Battery consumptions with capacity of 60 in dynamic environment}
 \label{fig:dynamic2}
 \end{figure}
 
@@ -219,7 +219,7 @@ NMG，RMG和PMG的性能保持不变，而基于MCTS的方法则有较为明显�
 \centering
 \includegraphics[scale=0.4]{./figs/iX_cY_fixCap40G10}
 \captionsetup{justification=centering}
-\caption{Battery consumption of different types of agents with capacity of 40 and 10 goals}
+\bicaption{电池容量为40且目标数量为10下的电量消耗}{Battery consumption with capacity of 40 and 10 goals}
 \label{fig:dynamic3}
 \end{figure}
 

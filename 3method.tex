@@ -50,7 +50,7 @@ UCB = \overline{X}_{a} + c\sqrt{\frac{2\ln N}{N_a}}
 \begin{figure*}[htb]
 \centering
 \includegraphics[width=0.9\textwidth]{./figs/mcts_process}
-\caption{Outline of MCTS\cite{Sutton2005ReinforcementLA}}
+\bicaption{MCTS流程\cite{Sutton2005ReinforcementLA}}{Outline of MCTS\cite{Sutton2005ReinforcementLA}}
 \label{fig:mcts_process}
 \end{figure*}
 
@@ -82,7 +82,7 @@ Yao等人提出基于蒙特卡洛树搜索的\SA \cite{DBLP:conf/atal/YaoL16}算
 其中$\alpha$和$\beta$参数决定了算法运行的计算开销，可由用户自定义。\SA 最终返回某个意图中的下一步选择以供智能体在当前周期执行。\SA 算法的具体流程如算法\ref{alg:SA}所示：
 
 \begin{algorithm}
-\caption{Return the action be executed at this cycle}\label{alg:SA}
+\caption{返回当前周期执行的动作}\label{alg:SA}
   \begin{algorithmic}[1]
     % \PROCEDURE{$SA(I, E,\alpha,\beta)$}{}
     \STATE input:$(I, E,\alpha,\beta)$

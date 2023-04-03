@@ -1,4 +1,4 @@
-\chapter{norm约束下的意图进展}\label{norm}
+\chapter{社会规范约束下的意图调度算法}\label{norm}
 本章提出一种基于\SA 的意图调度算法\SAN ，\SAN 支持在norm约束下对智能体意图进行调度。和对\SAN 的性能评估方式类似，在实验部分，本研究对\SAN 的性能在动态和静态环境下进行了实验分析，并与Meneguzzi等人提出的v-BDI\cite{DBLP:journals/eaai/MeneguzziROVL15}算法进行了比较，实验结果表明\SAN 的性能相较于v-BDI有显著优势。
 \section{社会环境下的norm}
 本文的第\ref{mg}章考虑到了社会模拟场景下的维持型目标，提出\SAM 算法对智能体的实现型目标和维持型目标进行调度。在本章中，社会模拟场景下的norm为主要考虑对象。
@@ -69,9 +69,10 @@ $$<C,A,R>$$
 与上一章中的实验类似，本章实验考虑了动态与静态环境。以下的实验结果展示的是每种方法运行100次运行次的平均性能。另外，实际上所有方法都可以在实验中实现所有顶层目标。因此，为了便于分析，本实验结果分析中不以完成目标数量为标准对智能体性能进行比较。
 
 本实验将\SAN 与v-BDI进行对比。另外，NMG（介绍于第\ref{mg}章实验部分）在本实验中作为基准用于评估\SAN 和v-BDI的性能。
+在以下实验的结果图中，NMG以FIFO所标注，\SAN 以MCTS标注。
 \subsection{静态环境实验}
 接下来的三个实验考虑火星探测器智能体在静态环境下的表现。在静态环境下，智能体的所有实现型目标都在初始运行时给定。
-\paragraph{Experiment 1}
+\paragraph{实验一}
 在第一个实验中，norm的数量被设定为10，智能体需要实现的目标数量从1逐步增加至15。具体实验结果如图\ref{fig:all_fixNorms10}所示。
 
 \begin{figure}
@@ -99,7 +100,7 @@ $$<C,A,R>$$
   \label{fig:goalsX_penaltyY_fixNorms10}
 \end{subfigure}
 \captionsetup{justification=centering}
-\caption{Overall utility, fuel consumption and penalty with fixed \#norms 10}
+\bicaption{norm数量为10下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#norms 10}
 \label{fig:all_fixNorms10}
 \end{figure}
 
@@ -111,17 +112,17 @@ $$<C,A,R>$$
 % v-BDI performance
 v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致违反norm的惩罚值。v-BDI始终选择效用值最高的计划执行，从而比NMG违反更少的norm，导致最终获得更高的总价值。
 % MCTS performance
-最后，正如图中所示，NMCTS（即\SAN 算法）有相比于NMG和v-BDI有着明显的性能优势。特别是当给定目标数量多时，NMCTS与其他方法直接的差异更为显著。这是因为NMCTS可以在决策时考虑到norm的影响，并且高效利用不同意图间的协同效应，通过合并不同意图间的相同动作以减少执行次数。这使得智能体有更低的可能性违反norm。与NMG、v-BDI不同，当目标数量增加时，NMCTS的性能甚至略有增加（在某些部分）。这是因为在norm的数量较少的情况下（10个norm），目标数量增加时，NMCTS可以更好地利用意图间的协同效应，而该协同效应带来的优势克服了违反norm的次数增加带来的危害，从而产生了更高的总价值。然而在后续实验中可以看到，当norm数量较多时，违反norm的危害很难被协同效应所克服。
+最后，正如图中所示，MCTS（即\SAN 算法）有相比于NMG和v-BDI有着明显的性能优势。特别是当给定目标数量多时，MCTS与其他方法直接的差异更为显著。这是因为MCTS可以在决策时考虑到norm的影响，并且高效利用不同意图间的协同效应，通过合并不同意图间的相同动作以减少执行次数。这使得智能体有更低的可能性违反norm。与NMG、v-BDI不同，当目标数量增加时，MCTS的性能甚至略有增加（在某些部分）。这是因为在norm的数量较少的情况下（10个norm），目标数量增加时，MCTS可以更好地利用意图间的协同效应，而该协同效应带来的优势克服了违反norm的次数增加带来的危害，从而产生了更高的总价值。然而在后续实验中可以看到，当norm数量较多时，违反norm的危害很难被协同效应所克服。
 
 % Penalty and consumption
 \paragraph{电量消耗分析}
 % Consumption
-如图\ref{fig:goalsX_consumptionY_fixNorms10}所示, 随着目标数量的增加，所有方法的电量消耗都有所增加。与NMG和v-BDI相比，NMCTS消耗的电量最少。这是由于NMCTS利用意图间的协同效应节省了大量执行步骤。而NMG与v-BDI在意图选择是都遵守FIFO策略，导致执行步骤更多，造成电量的浪费。
+如图\ref{fig:goalsX_consumptionY_fixNorms10}所示, 随着目标数量的增加，所有方法的电量消耗都有所增加。与NMG和v-BDI相比，MCTS消耗的电量最少。这是由于MCTS利用意图间的协同效应节省了大量执行步骤。而NMG与v-BDI在意图选择是都遵守FIFO策略，导致执行步骤更多，造成电量的浪费。
 \paragraph{惩罚值分析}
 % Penalty
-如图\ref{fig:goalsX_penaltyY_fixNorms10}所示, v-BDI受到的惩罚值比NMG低。这是由于v-BDI在计划选择时会有意地避免违反norm的计划，导致违反norm的次数更少。最后，相比于NMG和v-BDI，NMCTS有着显著的性能优势。特别是当给定目标的数量较大时，NMCTS与其他两种方法的差距更明显。
+如图\ref{fig:goalsX_penaltyY_fixNorms10}所示, v-BDI受到的惩罚值比NMG低。这是由于v-BDI在计划选择时会有意地避免违反norm的计划，导致违反norm的次数更少。最后，相比于NMG和v-BDI，MCTS有着显著的性能优势。特别是当给定目标的数量较大时，MCTS与其他两种方法的差距更明显。
 
-\paragraph{Experiment 2}
+\paragraph{实验二}
 在第二个实验中，norm的数量被改变为30，其他实验设置参数与实验一相同。图\ref{fig:all_fixNorms30}展示了实验结果。
 
 \begin{figure}
@@ -149,23 +150,23 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
   \label{fig:goalsX_penaltyY_fixNorms30}
 \end{subfigure}
 \captionsetup{justification=centering}
-\caption{Overall utility, fuel consumption and penalty with fixed \#norms 30}
+\bicaption{norm数量为10下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#norms 30}
 \label{fig:all_fixNorms30}
 \end{figure}
 
 % Figure information
-如图\ref{fig:goalsX_valueY_fixNorms30}所示，当实现目标数量增加时，NMG与v-BDI的性能表现明显下降。NMCTS方法依然保持最高的性能表现，且几乎没有下降趋势。
+如图\ref{fig:goalsX_valueY_fixNorms30}所示，当实现目标数量增加时，NMG与v-BDI的性能表现明显下降。MCTS方法依然保持最高的性能表现，且几乎没有下降趋势。
 
 % MCTS performance
-然而与上一个实验相比，NMCTS的性能表现有所下降。
+然而与上一个实验相比，MCTS的性能表现有所下降。
 % Reason
 这是因为在当前实验中，norm的数量较多，对多目标间协同效应的利用带来的收益几乎无法抵消违反norm带来的惩罚。此外，与实验一相比，图中所示的三种方法性能表现更为稳定，这是因为当norm数量较多时，在环境中的分布更为均匀。
 % Consumption
 如图\ref{fig:goalsX_consumptionY_fixNorms30}所示，三种方法的电量消耗与实验一几乎相同，这是因为目标位置并没有发生变化，因此智能体需要移动的距离不会改变。
 % Penalty
-如图\ref{fig:goalsX_penaltyY_fixNorms30}所示, 所有方法受到的惩罚值相较于实验一都有提升。然而NMCTS方法的性能表现依旧强于NMG和v-BDI。
+如图\ref{fig:goalsX_penaltyY_fixNorms30}所示, 所有方法受到的惩罚值相较于实验一都有提升。然而MCTS方法的性能表现依旧强于NMG和v-BDI。
 
-\paragraph{Experiment 3}
+\paragraph{实验三}
 在第三个实验中，智能体被给定固定10个目标，而norm的数量从0改变至50。具体实验结果如图\ref{fig:all_fixGoals10}所示。
 
 \begin{figure}
@@ -193,31 +194,31 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
   \label{fig:normsX_penaltyY_fixGoals10}
 \end{subfigure}
 \captionsetup{justification=centering}
-\caption{Overall utility, fuel consumption and penalty with fixed \#goals 10}
+\bicaption{目标数量为10下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#goals 10}
 \label{fig:all_fixGoals10}
 \end{figure}
 % Figure info
 图\ref{fig:normsX_valueY_fixGoals10}展示了不同数量norm情况下每个方法的效用价值。正如所预料的，NMG的性能表现最差。
 % explanation
-有一个特殊情况值得注意的是当norm的数量为0时，NMG与v-BDI没有性能差异。因为当norm数量为0时，智能体是否考虑norm已经无关紧要，性能表现最终取决于实现目标的数量与电池消耗量。NMCTS有着最优秀的性能表现。即使在norm的数量为0的情况下，NMCTS也比NMG和v-BDI有着更好的性能表现，因为其可以利用到不同意图间的协同效应。
+有一个特殊情况值得注意的是当norm的数量为0时，NMG与v-BDI没有性能差异。因为当norm数量为0时，智能体是否考虑norm已经无关紧要，性能表现最终取决于实现目标的数量与电池消耗量。MCTS有着最优秀的性能表现。即使在norm的数量为0的情况下，MCTS也比NMG和v-BDI有着更好的性能表现，因为其可以利用到不同意图间的协同效应。
 % Details
-当norm的数量较多时，NMCTS与其他方法的差距更为明显。
+当norm的数量较多时，MCTS与其他方法的差距更为明显。
 
 % Consumption
 图\ref{fig:normsX_consumptionY_fixGoals10} 展示了每种方法在不同norm数量下的平均电量消耗。NMG与v-BDI消耗的电量非常相似，但是由于v-BDI的计划选择机制与NMG不同，导致与NMG相比略有波动。
 
 % MCTS performance
-在所有情况下，与NMG和v-BDI相比，NMCTS消耗的电量明显更少。然而，随着norm数量的增加，NMCTS的电量消耗有所增加。这是因为NMCTS既重视电量消耗，也重视norm的影响。随着norm的数量增加，为了使整体收益最大化，NMCTS可能会放弃一些可以利用的意图间协同效应以更好地避免违反norm的情况发生。
+在所有情况下，与NMG和v-BDI相比，MCTS消耗的电量明显更少。然而，随着norm数量的增加，MCTS的电量消耗有所增加。这是因为MCTS既重视电量消耗，也重视norm的影响。随着norm的数量增加，为了使整体收益最大化，MCTS可能会放弃一些可以利用的意图间协同效应以更好地避免违反norm的情况发生。
 
 % Penalty
-图\ref{fig:normsX_penaltyY_fixGoals10}展示了不同norm数量下各方法的平均受惩罚值。可以看出，NMG总是受到最多的惩罚值，而NMCTS受到的惩罚值则比其他两种方法低很多。当norm数量较大时，不同方法收惩罚值的差异更为明显。当norm的数量为50时，NMCTS仅仅受到0.2的惩罚值，而v-BDI几乎是NMCTS的3倍，NMG几乎是NMCTS的6倍。
+图\ref{fig:normsX_penaltyY_fixGoals10}展示了不同norm数量下各方法的平均受惩罚值。可以看出，NMG总是受到最多的惩罚值，而MCTS受到的惩罚值则比其他两种方法低很多。当norm数量较大时，不同方法收惩罚值的差异更为明显。当norm的数量为50时，MCTS仅仅受到0.2的惩罚值，而v-BDI几乎是MCTS的3倍，NMG几乎是MCTS的6倍。
 
 \subsection{动态环境实验}
 为了探究不同方法在动态环境下的性能表现，以下实验假定并非所有目标都在初始时给定。相反，一些目标会在运行时分配给智能体。
 %
 本实验使用变量$n$来代表两个目标的分配时间间隔。即每隔$n$周期给智能体分配一个新的目标（假定执行一个动作对应一个周期）。
 
-\paragraph{Experiment 4}
+\paragraph{实验四}
 和实验一类似，在该实验中norm的数量被设定为10，实现目标的数量从1改变至15。另外，$n$的值被设定为5，即每隔5个周期给智能体分配一个新的目标。
 \begin{figure}
 \centering
@@ -244,21 +245,21 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
   \label{fig:goalsX_penaltyY_fixNorms10_dynamic}
 \end{subfigure}
 \captionsetup{justification=centering}
-\caption{Overall utility, fuel consumption and penalty with fixed \#norms 10}
+\bicaption{norm数量为10下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#norms 10}
 \label{fig:all_fixNorms10_dynamic}
 \end{figure}
 
-图\ref{fig:goalsX_valueY_fixNorms10_dynamic}展示了每种方法的总价值。NMG和v-BDI的性能与实验一几乎相同，而NMCTS则有较为明显的性能下降。这是因为即使目标在不同时间被分配给智能体，也不会影响NMG和v-BDI实现目标的顺序。唯一的区别在于，如果所有目标都在初始给定，NMG和v-BDI有更多的机会从“意料之外”的协同效应中受益。即当一个目标位于智能体移动到某一个位置的途中时，智能体可以顺便实现途中的目标，从而达到节省执行步骤的效果，这使得电量消耗降低以及违反norm的数量降低。然而，NMCTS的方法受到环境动态性的影响，并行执行的目标数量降低，而智能体无法预测未来，只能根据当前状态计算出“最佳”的决策，导致对不同意图间协同效应的利用价值降低。尽管如此，NMCTS的表现依然显著优于NMG和v-BDI。
+图\ref{fig:goalsX_valueY_fixNorms10_dynamic}展示了每种方法的总价值。NMG和v-BDI的性能与实验一几乎相同，而MCTS则有较为明显的性能下降。这是因为即使目标在不同时间被分配给智能体，也不会影响NMG和v-BDI实现目标的顺序。唯一的区别在于，如果所有目标都在初始给定，NMG和v-BDI有更多的机会从“意料之外”的协同效应中受益。即当一个目标位于智能体移动到某一个位置的途中时，智能体可以顺便实现途中的目标，从而达到节省执行步骤的效果，这使得电量消耗降低以及违反norm的数量降低。然而，MCTS的方法受到环境动态性的影响，并行执行的目标数量降低，而智能体无法预测未来，只能根据当前状态计算出“最佳”的决策，导致对不同意图间协同效应的利用价值降低。尽管如此，MCTS的表现依然显著优于NMG和v-BDI。
 
 % Consumption
-图\ref{fig:goalsX_consumptionY_fixNorms10_dynamic} 展示了各方法的电量消耗。NMG和v-BDI的电量消耗与实验一几乎相同，而NMCTS方法由于环境的动态性导致其难以利用协同效应，使得电量消耗有所增加，但是其表现依旧优于NMG和v-BDI。
+图\ref{fig:goalsX_consumptionY_fixNorms10_dynamic} 展示了各方法的电量消耗。NMG和v-BDI的电量消耗与实验一几乎相同，而MCTS方法由于环境的动态性导致其难以利用协同效应，使得电量消耗有所增加，但是其表现依旧优于NMG和v-BDI。
 
 % penalty
 图\ref{fig:goalsX_penaltyY_fixNorms10_dynamic}展示了各方法所受到的惩罚值。与实验一相比，每种方法所受到的惩罚值几乎没有变化（目标数量相同的情况下）。这表明当前设定下的环境动态性不足以早成显著的惩罚值差异。
 
 \vspace{3cm}
 
-\paragraph{Experiment 5}
+\paragraph{实验五}
 在实验五中，norm的数量被设定为30。其他实验设定与实验四相同。实验结果如图\ref{fig:all_fixNorms30_dynamic}所示。
 \begin{figure}
 \centering
@@ -285,13 +286,13 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
   \label{fig:goalsX_penaltyY_fixNorms30_dynamic}
 \end{subfigure}
 \captionsetup{justification=centering}
-\caption{Overall utility, fuel consumption and penalty with fixed \#norms 30}
+\bicaption{norm数量为30下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#norms 30}
 \label{fig:all_fixNorms30_dynamic}
 \end{figure}
 
-该设定下的实验结果与实验二非常类似。相比于NMG和v-BDI，NMCTS有着显著的性能优势。v-BDI比NMG的性能表现更好，但是仍然无法与NMCTS相比较。特别是当实现目标数量较大时，NMCTS的性能优势尤为明显。
+该设定下的实验结果与实验二非常类似。相比于NMG和v-BDI，MCTS有着显著的性能优势。v-BDI比NMG的性能表现更好，但是仍然无法与MCTS相比较。特别是当实现目标数量较大时，MCTS的性能优势尤为明显。
 
-\paragraph{Experiment 6}
+\paragraph{实验六}
 在实验六中，智能体实现目标的数量被固定为10，norm的数量被固定为30。分配目标的时间间隔$n$从1改变至15。具体实验结果如图\ref{fig:all_fixGoals10Norms30}所示。
 
 \begin{figure}
@@ -319,20 +320,20 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
   \label{fig:intervalX_penaltyY_fixGoals10}
 \end{subfigure}
 \captionsetup{justification=centering}
-\caption{Overall utility, fuel consumption and penalty with fixed \#goals 10 and \#norms 30}
+\bicaption{目标数量为10且norm数量为30下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#goals 10 and \#norms 30}
 \label{fig:all_fixGoals10Norms30}
 \end{figure}
 % Figure information
-如图\ref{fig:intervalX_valueY_fixGoals10}所示，NMCTS方法依旧优于NMG和v-BDI。然而，NMCTS方法的收益随着时间间隔的增加而有所减少。
+如图\ref{fig:intervalX_valueY_fixGoals10}所示，MCTS方法依旧优于NMG和v-BDI。然而，MCTS方法的收益随着时间间隔的增加而有所减少。
 % Reason
-当$n$较小时，有更多的并行目标，因此智能体可以更多地利用多意图间的协同效应。当$n$设定为15时，智能体几乎无法从协同效应中受益，因为这种情况下大多数时候智能体只有一个目标。然而，NMCTS仍然比v-BDI表现更为优秀，因为NMCTS可以更好地对norm进行决策推理并利用多意图间协同效应，从而减少移动量以及违反norm的次数。
+当$n$较小时，有更多的并行目标，因此智能体可以更多地利用多意图间的协同效应。当$n$设定为15时，智能体几乎无法从协同效应中受益，因为这种情况下大多数时候智能体只有一个目标。然而，MCTS仍然比v-BDI表现更为优秀，因为MCTS可以更好地对norm进行决策推理并利用多意图间协同效应，从而减少移动量以及违反norm的次数。
 
 % Consumption
-图\ref{fig:intervalX_consumptionY_fixGoals10}展示了不同时间间隔下各方法的平均耗电量。所有方法的耗电量都随着时间间隔的变大而增加。然而，值得注意的是，与NMG和v-BDI相比，NMCTS的电量消耗增长更为明显。当$n$大于13时，其电量消耗甚至大于NMG和v-BDI。
+图\ref{fig:intervalX_consumptionY_fixGoals10}展示了不同时间间隔下各方法的平均耗电量。所有方法的耗电量都随着时间间隔的变大而增加。然而，值得注意的是，与NMG和v-BDI相比，MCTS的电量消耗增长更为明显。当$n$大于13时，其电量消耗甚至大于NMG和v-BDI。
 % Explanation
-这是因为NMCTS主要考虑的是整体效用值，这导致其放弃了一些原本可以利用的意图间协同效应而避免违反norm，已获得更高的整体收益。
+这是因为MCTS主要考虑的是整体效用值，这导致其放弃了一些原本可以利用的意图间协同效应而避免违反norm，已获得更高的整体收益。
 % penalty
-图\ref{fig:intervalX_penaltyY_fixGoals10}展示了每种方法在不同时间间隔下单平均惩罚值。与NMG相比，v-BDI收到的惩罚值更少。由于固定的实现目标顺序，这两种方法的惩罚值几乎不会随着时间间隔的增加而改变。然而，相比之下NMCTS所受惩罚值非常低。另外，由于NCMTS总是基于当前环境进行决策，导致随着$n$的增加，NMCTS所执行步骤数量增加，最终使得智能体违反更多的norm，受到的惩罚值有明显的增加。
+图\ref{fig:intervalX_penaltyY_fixGoals10}展示了每种方法在不同时间间隔下单平均惩罚值。与NMG相比，v-BDI收到的惩罚值更少。由于固定的实现目标顺序，这两种方法的惩罚值几乎不会随着时间间隔的增加而改变。然而，相比之下MCTS所受惩罚值非常低。另外，由于NCMTS总是基于当前环境进行决策，导致随着$n$的增加，MCTS所执行步骤数量增加，最终使得智能体违反更多的norm，受到的惩罚值有明显的增加。
 \section{本章总结}
 本章提出了一种基于\SA 的意图调度算法\SAN 。\SAN 可以在norm约束下对智能体进行意图调度。另外，基于火星探测器的模拟场景，本章在静态环境以及动态环境下对\SAN 的性能进行了分析。实验结果表明\SAN 与其他方法（NMG和v-BDI）相比有着显著的性能优势。即使在norm的数量非常多时，\SAN 仍然可以可靠地地避免对norm
 的违反同时高效利用多个并发意图之间的协同效应，最终得到较高的整体价值收益。
