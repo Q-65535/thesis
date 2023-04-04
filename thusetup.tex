@@ -146,12 +146,18 @@
 
 %自定义usepackage
 \usepackage{graphicx}
-\usepackage{caption}
+\usepackage[textfont=bf,labelfont=bf]{caption} %% 图片标题加粗
 \usepackage{subcaption}
+
+% 章节标题中的数字设置为中文
+\ctexset{
+chapter/number = \chinese{chapter}
+}
+
 % 图片标题
 \usepackage{ctex} %引入CTEX宏包
 \usepackage{caption}
-\usepackage{bicaption}
+\usepackage[list=off]{bicaption}
 \captionsetup[figure][bi-second]{name=Figure} %设置图的英文编号前缀
 \captionsetup[table][bi-second]{name=Table} %设置表的英文编号前缀
 

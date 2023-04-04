@@ -1,23 +1,32 @@
 \begin{abstract}
-智能体（Agent）是嵌于某特定环境下能够自主行动以实现给定目标的个体。多智能体系统（Multi-Agent System, MAS）通过智能体间的交互实现分布式智能，能够用于解决单个智能体难以或无法解决的问题，是当前人工智能领域的研究热点之一。
+智能体（Agent）是嵌于某特定环境下能够自主行动以实现给定目标的个体。
+多智能体系统（Multi-Agent System, MAS）通过智能体间的交互实现分布式智能，能够用于解决单个智能体难以或无法解决的问题，是当前人工智能领域的研究热点之一。
 %
-在当前对智能体的研究中出现多种智能体体系结构和模型，其中Belief-Desire-Intention-based (BDI)智能体模型是当前学术界应用和研究最多的智能体体系结构之一。
+在当前对智能体的研究中出现多种智能体体系结构和模型，其中Belief-Desire-Intention-based (BDI)智能体模型是当前学术界应用和研究最多的智能体体系结构之一，其关键优势之一是它能够同时追求多个目标。
 %
-BDI智能体的关键优势之一是它能够同时追求多个目标。当BDI智能体处于社会环境中时，可能需要保持某些资源在一定水平之上以保证正常运行，例如火星探测器在执行任务时需要维持一定的电量；此外，社会环境中的社会规范norm也会对智能体的执行过程造成影响。一个理性的智能体应该能够对这些社会约束进行推理，以适应社会环境。
+在一些场景下，BDI智能体需要保持某些资源在一定水平之上以保证正常运行，例如火星探测器在执行任务时需要维持一定的电量以确保有足够的动力；
+此外，当智能体处于社会环境中时，社会环境中的社会规范norm也会对智能体的执行过程造成影响，例如在行驶过程中闯红灯会受到惩罚等。然而，目前大多对BDI智能体决策的研究忽略了维持型目标，针对norm约束下的决策问题的相关研究也没有考虑到多目标间的相互影响，限制了智能体在复杂场景下的应用。
 
 % 关于本文内容
-本文研究了社会仿真模拟场景下的智能体意图调度技术。具体地，本文基于以蒙特卡洛树搜索（Monte-Carlo Tree Search，MCTS）为核心的的智能体意图调度算法\SA，提出三种新的智能体意图调度器\SAM、\SAN 和\SAT。
-\SAM 一方面继承\SA 的优势，即高效利用不同意图之间的协同效应，有效避免意图间的相互冲突，另一方面可以在决策时考虑维持型目标。\SAN 在决策时加入对norm的考虑，支持在社会规范norm约束下对智能体意图进行调度。最后，\SAT 支持线性时序逻辑（Linear Temporal Logic）表示的各类目标和社会准则。本文在火星探测器模拟场景中对\SAM、\SAN 和\SAT 的性能进行实验评估，实验结果表明本研究提出的方法在不同困难的一系列场景中优于其他现有的最先进的方法。
+本文研究了社会仿真模拟场景下的智能体意图调度技术。具体地，本文基于以蒙特卡洛树搜索（Monte-Carlo Tree Search，MCTS）为核心的的智能体意图调度算法\SA，提出三种新的智能体意图调度方法\SAM、\SAN 和\SAT。
+\SAM 一方面继承\SA 的优势，即高效利用不同意图之间的协同效应，有效避免意图间的相互冲突，另一方面可以在决策时考虑维持型目标。\SAN 在决策时加入对norm的考虑，支持在社会规范norm约束下对智能体意图进行调度。
+最后，\SAT 支持线性时序逻辑（Linear Temporal Logic）表示的各类目标和社会准则作为输入对智能体的意图进行调度。本文在火星探测器模拟场景中对\SAM、\SAN 和\SAT 的性能进行实验评估，实验结果表明本研究提出的方法在不同困难的一系列场景中优于其他现有的最先进的方法。
   \thusetup{
     keywords = {BDI智能体, 意图进展问题, 维持型目标, 社会规范, 时序逻辑},
   }
 \end{abstract}
 
 \begin{abstract*}
-    An agent is an individual embedded in a specific environment that can act independently to achieve given goals. Multi-Agent System (MAS) realizes distributed intelligence through the interactions between agents, and can be used to solve the problems that a single agent is difficult or even unable to solve. It is one of the current research hotspots in the field of artificial intelligence. There are many kinds of agent architectures, among which the Belief-Desire-Intention (BDI) based model is one of the most widely used and studied agent architectures in the current academic community.
-    One of the key advantages of BDI agent is its ability to pursue multiple goals in parallel. When BDI agent situates in a social environment, it may be required to maintain resources above some level in order to operate normally; besides, social norms that regulate the agents' behaviors in the environment can also impact the agents' executions. To adapt in social environments, a rational agent should be able to reason about such social constraints.
+    An agent is an individual embedded in a specific environment that can act independently to achieve given goals. Multi-Agent System (MAS) realizes distributed intelligence through the interactions between agents, and can be used to solve the problems that a single agent is difficult or even unable to solve.
+    It is one of the current research hotspots in the field of artificial intelligence. 
+    There are many kinds of agent architectures, among which the Belief-Desire-Intention (BDI) based model is one of the most widely used and studied agent architectures in the current academic community.
+    One of the key advantages of BDI agent is its ability to pursue multiple goals in parallel. When BDI agent situates in a social environment, it may be required to maintain resources above some level in order to operate normally; besides, social norms that regulate the agents' behaviors in the environment can also impact the agents' executions.
+    To adapt in social environments, a rational agent should be able to reason about such social constraints.
 
-    We investigate the technology of scheduling agent intentions when there are maintenance goals and norm constraints. Specifically, based on a heuristic intention scheduler \SA, we propose three kinds of new agent intention schedulers: \SAM, \SAN and \SAT. On the one hand, it inherits the advantages of \SA, that is, it can effectively use the synergy between different intentions, effectively avoid the conflicts between intentions, and on the other hand, it can consider the maintenance goals in decision-making; \SAN supports the scheduling of agent intentions under the constraints of social norms; Finally, \SAT supports various goals and social norms represented by linear temporal logic formula. In this paper, the performance of \SAM, \SAN and \SAT are evaluated experimentally in the simulation scenario of the Mars rover. The experimental results show that our approaches are superior to other existing state-of-the-art approaches in a series of difficult scenarios.
+    We investigate the technology of scheduling agent intentions when there are maintenance goals and norm constraints. 
+    Specifically, based on a heuristic intention scheduler \SA, we propose three kinds of new agent intention schedulers: \SAM, \SAN and \SAT. 
+    On the one hand, it inherits the advantages of \SA, that is, it can effectively use the synergy between different intentions, effectively avoid the conflicts between intentions, and on the other hand, it can consider the maintenance goals in decision-making; \SAN supports the scheduling of agent intentions under the constraints of social norms; Finally, \SAT supports various goals and social norms represented by linear temporal logic formula. 
+    In this paper, the performance of \SAM, \SAN and \SAT are evaluated experimentally in the simulation scenario of the Mars rover. The experimental results show that our approaches are superior to other existing state-of-the-art approaches in a series of difficult scenarios.
   \thusetup{
     keywords* = {BDI agent, Intention Progression Problem, Maintenance Goal, Social Norm, Temporal Logic},
   }

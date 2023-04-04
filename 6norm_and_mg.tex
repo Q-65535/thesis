@@ -75,7 +75,7 @@ LTL解析器和转换器已在\cite{DBLP:books/daglib/0020982,DBLP:journals/jlap
 
 \begin{figure*}[htb]
 \centering
-\includegraphics[width=0.9\textwidth]{./figs/translator}
+\includegraphics[width=0.5\textwidth]{./figs/translator}
 \bicaption{LTL检查器}{LTL Checker}
 \label{fig:translator}
 \end{figure*}
@@ -122,9 +122,9 @@ LTL解析器和转换器已在\cite{DBLP:books/daglib/0020982,DBLP:journals/jlap
 \end{algorithmic}
 \end{algorithm}
 
-在描述对\SA 法的修改之前，本节首先描述智能体的初始设定以及骑在执行期间的内部状态转换规则：假设智能体在开始执行时被分配了一组需要满足的LTL公式，在正式执行之前，智能体首先将每个LTL公式转化为状态机（状态机为智能体内部状态的一部分）；在智能体执行过程中，每次更新智能体信念集合时，所有状态机都会根据智能体当前对环境的认知进行状态转移；如果在当前认知下，状态机中可由可应用的状态转移规则，则按照算法\ref{checker}所述触发其相关操作。
+在描述对\SA 方法的修改之前，本节首先描述智能体的初始设定以及骑在执行期间的内部状态转换规则：假设智能体在开始执行时被分配了一组需要满足的LTL公式，在正式执行之前，智能体首先将每个LTL公式转化为状态机（状态机为智能体内部状态的一部分）；在智能体执行过程中，每次更新智能体信念集合时，所有状态机都会根据智能体当前对环境的认知进行状态转移；如果在当前认知下，状态机中可由可应用的状态转移规则，则按照算法\ref{checker}所述触发其相关操作。
 
-\subsection{对\SA 法的修改}
+\subsection{对\SA 方法的修改}
 为了支持LTL表示形式下的意图调度，\SAT 修改了\SA 算法中的扩展与模拟阶段，具体修改如下：
 \paragraph{对扩展阶段的修改}
 % Reactive
@@ -196,4 +196,4 @@ RMG、PMG和v-BDI在电量消耗方面具有几乎相同的性能，这同样也
 RMG和PMG在总价值方面同样也具有几乎相同的性能表现。然而尽管与RMG和PMG相比，v-BDI在消耗电量方面并无优势，但其总价值却比RMG和PMG高很多。这是因为与RMG和PMG相比，v-BDI受到的惩罚值更低，导致最终的总价值更高。最后，由于同时考虑维持型目标、norm以及利用多意图间协同效应的能力，MCTS的性能表现相较于其他方法有着显著优势。
 
 \section{本章总结}
-本章提出了一种基于MCTS的意图调度算法\SAT 。\SAT 可以在norm约束下同时对智能体的实现型目标和维持型目标进行意图调度。另外，基于火星探测器的模拟场景，本章在迪电池容量以及高电池容量场景下对\SAT 的性能进行了分析。实验结果表明\SAT 与其他方法（PMG和v-BDI）相比有着显著的性能优势。
+本章提出了一种基于MCTS的意图调度算法\SAT 。\SAT 可以在norm约束下同时对智能体的实现型目标和维持型目标进行意图调度。另外，基于火星探测器的模拟场景，本章在低电池容量以及高电池容量场景下对\SAT 的性能进行了分析。实验结果表明\SAT 与其他方法（PMG和v-BDI）相比有着显著的性能优势。
