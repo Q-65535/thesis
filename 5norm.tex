@@ -5,11 +5,11 @@
 
 第\ref{background}章中提到在社会场景下，norm是一种重要的管控智能体行为的手段\cite{DBLP:journals/mags/SavarimuthuC11}。有三种类型的norm，一种是义务，其定义了智能体应当做什么；另一种是许可，其定义了智能体可以做什么；最后一种是禁令，其定义了智能体被禁止做什么。本文主要考虑的禁令类型的norm以及其如何影响智能体的行为。
 
-现有对IPP的研究往往忽略了智能体在社会场景下执行的情况。其假设只要动作的前置条件满足，智能体即可执行。另外，智能体的性能表现也是基于目标完成数量进行评估的。然而在社会场景中，智能体的行为可能会受到norm的约束以确保智能体的正常运行。例如，在火星探测器场景下，智能体可能被禁止前往陡峭的高坡以避免跌落受到损害。
+现有对IPP的研究往往忽略了智能体在社会场景下执行的情况。其假设只要动作的前置条件满足，智能体即可执行。另外，智能体的性能表现也是基于目标完成数量进行评估的。然而在社会场景中，智能体的行为会受到norm的约束以确保智能体的正常运行。例如，在火星探测器场景下，智能体会被禁止前往陡峭的高坡以避免跌落受到损害。
 
 % survey
 % logic based
-正如第\ref{background}章中所提到的，在BDI智能体研究领域，为了解决norm约束下的意图进展问题，可以像BOID\cite{DBLP:conf/agents/BroersenDHHT01}、NBM\cite{DBLP:conf/atal/MeneguzziL09}以及NoA\cite{DBLP:conf/ijcai/KollingbaumN03}一样，基于逻辑规则对智能体的行为进行限制，在智能体运行时严格遵守逻辑规则避免对norm的违反。然而，这类方法极大程度地限制了智能体的灵活性，在某些情况下智能体需要违反norm以实现更重要的目标。例如，破坏窗户的行为是norm禁止的，但是当发生火灾时，一个理性的智能体应该为了逃生而破坏窗户离开火灾区域。另外，这类方法需要用户自定义逻辑规则。当应用于复杂环境时，用户需要编写大量规则，这加重了用户负担并且可能由于规则数量庞大导致智能体程序进行逻辑解析的计算开销增大，加重决策负担。
+正如第\ref{background}章中所提到的，在BDI智能体研究领域，为了解决norm约束下的意图进展问题，可以像BOID\cite{DBLP:conf/agents/BroersenDHHT01}、NBM\cite{DBLP:conf/atal/MeneguzziL09}以及NoA\cite{DBLP:conf/ijcai/KollingbaumN03}一样，基于逻辑规则对智能体的行为进行限制，在智能体运行时严格遵守逻辑规则避免对norm的违反。然而，这类方法极大程度地限制了智能体的灵活性，在一些特殊情况下智能体需要违反norm以实现更重要的目标。例如，破坏窗户的行为是norm禁止的，但是当发生火灾时，一个理性的智能体应该为了逃生而破坏窗户离开火灾区域。另外，这类方法需要用户自定义逻辑规则。当应用于复杂环境时，用户需要编写大量规则，这加重了用户负担并且可能由于规则数量庞大导致智能体程序进行逻辑解析的计算开销增大，加重决策负担。
 % priority based
 N-2APL\cite{DBLP:conf/aamas/AlechinaDL12}和N-Jason\cite{DBLP:conf/dalt/LeePLDA14}使用优先级的概念对不同的目标、norm进行划分。相较于存粹的逻辑规则而言，基于优先级的方法有着更强的灵活性，但是仍然对用户的负担较大（优先级规则由用户自定义），且由于原子计划的设定（原子计划的执行无法被打断），其无法高效利用不同意图间的协同效应。
 % value based
@@ -17,7 +17,7 @@ N-2APL\cite{DBLP:conf/aamas/AlechinaDL12}和N-Jason\cite{DBLP:conf/dalt/LeePLDA1
 
 本章考虑在norm约束下对智能体意图的调度，\SAN 算法允许智能体做出违反norm的行为已获得更大收益，提高了智能体的灵活性；另一方面，\SAN 仅需要用户提供价值评估函数即可，这减轻了用户的负担；最后，\SAN 可以高效利用不同意图间的协同效应，显著提升智能体的性能表现。
 
-\section{norm的表示与问题定义}
+\section{Norm的表示与问题定义}
 % Formal representation.
 一个（禁令类型）norm被规范表示为一个三元组：
 $$<C,A,R>$$
@@ -35,18 +35,49 @@ $$<C,A,R>$$
 具体地，基于目标计划树模型，norm约束下的智能体意图调度问题可被定义为：给定一组表示智能体意图的目标计划树$\{t_1, \dots, t_n\}$以及一组表示智能体当前环境状态的条件变量$Env$，在每一个执行周期中返回一个目标计划树$t_i$中的下一个执行步骤使得智能体实现的目标数量最多，因违反norm受到的惩罚最小且消耗的资源最少。
 
 \section{\SAN 意图调度算法}
-本章介绍norm约束下的意图调度算法\SAN，\SAN 在第\SA （已在第\ref{SA}章中介绍）的基础上进行拓展，加入对norm考虑。
-\SAN 算法修改了\SA 算法中的扩展与模拟阶段，加入了对因违反norm而受到惩罚的模拟，以下是对SA算法的具体修改细节：
-\paragraph{对扩展阶段的修改}
+本章介绍norm约束下的意图调度算法\SAN，\SAN 在第\SA （已在第\ref{SA}章节中介绍）的基础上进行拓展，加入对norm考虑。
+\SAN 算法拓展了\SA 算法中的扩展与模拟阶段，加入了对因违反norm而受到惩罚的模拟，以下是对SA算法的具体拓展细节：
+\paragraph{对扩展阶段的拓展}
 % Reactive
 在扩展阶段，\SAN 首先检查某个选中的叶子节点$n_s$状态下每一个可执行动作$a_i$，若$a_i$不会违反norm，则直接生成一个新的节点对应于执行$a_i$的结果，并作为$N_s$的一个孩子节点。若$a_i$会违反norm，则首先进行如下检查：检查$a_i$所在意图$t_i$，若$t_i$所实现目标$g_i$的价值$V_i$大于当前执行$t_i$所受到的总惩罚值$P_i$（包括执行$a_i$的惩罚值）,则生成一个新节点对应于执行$a_i$的结果。相反，若$t_i$所实现目标$g_i$的价值$V_i$小于当前执行$t_i$所受到的总惩罚值$P_i$，则不生成新的节点。
 %
 当所有可执行动作$a_i$都会造成$P_i > V_i$时，则不会有新的节点生成。该情况下智能体会暂停其执行。
-%
 在\SAN 中，每个节点记录的信息除智能体意图、环境状态外，还记录了执行过程中所收到的总惩罚值以及执行每个意图所受到的部分惩罚值。
+扩展的完整流程可见算法\ref{norm_expand}。
 
-\paragraph{对模拟阶段的修改}
-在模拟阶段，\SAN 和\SA 一样，随机选择实现目标过程中可执行的动作执行。当某个可执行动作$a_i$违反norm时，进行如下检查：检查$a_i$所在意图$t_i$，若$t_i$所实现目标$g_i$的价值$V_i$大于当前执行$t_i$所受到的总惩罚值$P_i$（包括执行$a_i$的惩罚值）,则禁止该动作的执行。相反，若$t_i$所实现目标$g_i$的价值$V_i$小于当前执行$t_i$所受到的总惩罚值$P_i$，则直接执行。
+\begin{algorithm}
+\caption{扩展}\label{norm_expand}
+\begin{algorithmic}[1]
+\STATE input:$(n_s)$
+      \STATE $N \gets \emptyset$
+      \STATE $s \gets getState(n_s)$
+      \STATE $I \gets getIntentions(s)$
+      \FOR{each $i \in I$}
+        \STATE $Act \gets getExecutableActions(i)$
+        \FOR{each $a \in Act$}
+          \IF{$a$ does not vioalte any norm}
+            \STATE $s_e \gets execute(s, a)$
+            \STATE $n \gets newNode(s_e)$
+            \STATE $N \gets N \cup \{n\}$
+          \ELSIF{$penalty(i)+penalty(a) < value(g)$}
+            \STATE $g \gets getGoal(i)$
+            \STATE $s_e \gets execute(s, a)$
+            \STATE $n \gets newNode(s_e)$
+            \STATE $N \gets N \cup \{n\}$
+          \ENDIF
+        \ENDFOR
+      \ENDFOR
+    \STATE $n_s.setChildren(N)$
+    \FOR{each $n_i \in N$}
+    \STATE $n_i.setParent(n_s)$
+    \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+%
+首先，智能体获取当前节点的相关状态信息（第2-4行），其中$s$为$n_s$节点所对应的状态（记录了智能体的完整信息以及对环境的认知），$I$为意图集合。然后，对每一个意图$i \in  I$ 进行检查并生成新的节点：对$I$中每个可执行动作$a$，如果a不会违反norm，则直接生成与其执行后的状态相应的搜索树节点（第8-11行）； 如果a会违反norm且违反norm所收到的惩罚值与当前意图的惩罚值之和小于当前意图所实现目标的价值，则根据$a$的执行生成新的节点（第14-15行），否则不生成新的节点。 最后所有新生成的节点被设定为$n_s$的孩子节点。
+
+\paragraph{对模拟阶段的拓展}
+在模拟阶段，\SAN 和\SA 类似，随机选择实现目标过程中可执行的动作执行。当某个可执行动作$a_i$违反norm时，进行如下检查：检查$a_i$所在意图$t_i$，若$t_i$所实现目标$g_i$的价值$V_i$大于当前执行$t_i$所受到的总惩罚值$P_i$（包括执行$a_i$的惩罚值）,则禁止该动作的执行。相反，若$t_i$所实现目标$g_i$的价值$V_i$小于当前执行$t_i$所受到的总惩罚值$P_i$，则直接执行。
 
 当以下三个条件中的任意一个满足时，模拟阶段即停止：
 \begin{enumerate}
@@ -54,17 +85,65 @@ $$<C,A,R>$$
   \item 当前状态下无法实现剩余的实现型目标。
   \item 所有的可执行动作$a_i$都会导致其所在意图$T_i$当前的总惩罚值$P_i$ 大于 $T_i$所实现的目标价值$V_i$。
 \end{enumerate}
+模拟的完整流程可见算法\ref{norm_simulate}。
+
+模拟阶段以某一随机选中的扩展节点$n_e$为起始，获得其对应的状态$s$。在状态s下，随机执行可执行的动作，直至最终状态。具体的，智能体在每一个执行周期随机选择一个意图$i_r$进行判断，如果$i_r$无法执行，则抛弃该选择并随机选择另一个意图知道选中一个可执行意图或意图集合为空为止（第8-13行），如果选中意图为空，则说明无可执行意图，到达最终状态。然后在选中意图$i$中随机选择一个可执行动作$a$进行判断，如果收益为负（$penalty(i)+penalty(a) < value(g)$）,则抛弃当前选择，并随机选择另一个动作，如果最终无选中动作，则返回意图选择阶段继续执行（第25-26行）。否则，模拟$a$在状态$s$下的执行。 在智能体到达最终状态后，生成其对应的节点$n_t$并将其返回。
+
+\begin{algorithm}[H]
+\caption{模拟}\label{norm_simulate}
+\begin{algorithmic}[1]
+\STATE input:$(n_e)$
+\STATE $s \gets getState(n_e)$
+\WHILE{$true$}
+  \STATE $I \gets getIntentions(s)$
+  \IF {$I$ is empty}
+    \STATE $break$
+  \ENDIF
+  \STATE $i \gets null$\label{norm_select_intention}
+  \WHILE{$I$ is not empty}
+    \STATE $i_r \gets random(I)$
+    \STATE $I \setminus \{i_r\}$
+    \IF{$i_r$ is executable}
+      \STATE $i \gets i_r$
+      \STATE $break$
+    \ENDIF
+  \ENDWHILE
+  \IF{$i$ is $null$}
+    \STATE $break$
+  \ENDIF
+  \STATE $g \gets getGoal(i)$
+  \STATE $Act \gets getExecutableActions(i)$
+  \STATE $a \gets null$
+  \WHILE{$Act$ is not empty}
+    \STATE $a_r \gets random(Act)$
+    \STATE $Act \setminus \{a_r\}$
+    \IF {$penalty(i)+penalty(a) < value(g)$}
+      \STATE $a \gets a_r$
+      \STATE $break$
+    \ENDIF
+  \ENDWHILE
+  \IF{$a$ is $null$}
+    \STATE go to line \ref{norm_select_intention}
+  \ENDIF
+  \STATE $s \gets execute(s, a)$
+\ENDWHILE
+
+\STATE $n_t \gets newNode(s)$
+\RETURN $n_t$
+\end{algorithmic}
+\end{algorithm}
 
 \section{实验}
+本节对\SAN 在norm约束下的性能进行评估，并在不同难度下的静态环境和动态环境中与Meneguzzi等人\cite{DBLP:journals/eaai/MeneguzziROVL15}提出的v-BDI进行对比。
 \subsection{实验场景介绍}
-本章的实验场景与上一章类似，基于火星探测器的模拟场景（见图\ref{fig:marsrover}）。不同的是在考虑norm的情况下，本实验假设智能体所处的地表并非完全平坦：在不同的方格直接可能存在一定的高低差，出现斜坡。这些斜坡可能对智能体的行动造成影响。对于智能体来说，跨越这些斜坡是非常危险的，可能会造成智能体机械结构的损伤（但是智能体仍然可以选择冒险跨越斜坡）。因此，本实验设定如果智能体跨越斜坡就会违反norm并受到相应的惩罚值。在以下实验中，为了专注于探究norm对智能体决策的影响，假设智能体拥有无限的电池容量，而无需考虑返回基地充电（电量消耗仍然为评估标准之一，如此设定仅为了让智能体无需考虑电量相关的维持型目标）。
+本实验的场景与上一章类似，基于火星探测器的模拟场景（见图\ref{fig:marsrover}）。不同的是在考虑norm的情况下，本实验假设智能体所处的地表并非完全平坦：在不同的方格直接可能存在一定的高低差，出现斜坡。这些斜坡会对智能体的行动造成影响。对于智能体来说，跨越这些斜坡是非常危险的，可能会造成智能体机械结构的损伤（但是智能体仍然可以选择冒险跨越斜坡）。因此，本实验设定如果智能体跨越斜坡就会违反norm并受到相应的惩罚值。在以下实验中，为了专注于探究norm对智能体决策的影响，假设智能体拥有无限的电池容量，而无需考虑返回基地充电（电量消耗仍然为评估标准之一，如此设定仅为了让智能体无需考虑电量相关的维持型目标）。
 
 % measring the agent performance
-本实验根据三个指标对智能体的性能进行评估：完成目标的数量、电池消耗量以及总惩罚值。具体地，本实验根据评估函数$\frac{\#goals}{batteryConsumption} - penaltyValue$对智能体的性能进行评估，其中$\#goals$为实现目标的数量，$batteryConsumption$为电池消耗量，$penaltyValue$为因违反norm而受到的总惩罚值。该价值函数决定了智能体的综合性能表现。另外，实验中每个norm的惩罚值随机生成，随机生成的惩罚值符合正态分布$\sigma(0.1, 0.01)$
+本实验根据三个指标对智能体的性能进行评估：完成目标的数量、电池消耗量以及总惩罚值。具体地，本实验根据评估函数$\frac{\#goals}{batteryConsumption} - penalty$对智能体的性能进行评估，其中$\#goals$为实现目标的数量，$batteryConsumption$为电池消耗量，$penalty$为因违反norm而受到的总惩罚值。该价值函数决定了智能体的综合性能表现。另外，实验中每个norm的惩罚值随机生成，随机生成的惩罚值符合正态分布$\sigma(0.1, 0.01)$
 
 本文将\SAN 与Meneguzzi等人提出的v-BDI\cite{DBLP:journals/eaai/MeneguzziROVL15}进行比较。如第\ref{background}中所提到，v-BDI以FIFO的规则进行意图选择，在计划选择阶段则选择价值最大的计划执行。具体地，v-BDI在做出计划选择之前对每个可应用计划进行评估，评估检查计划所实现的目标具有多少收益，以及计划中的动作是否会违反norm，以及如果执行这些动作会造成多少惩罚。然后基于用户自定的效用函数对每个计划进行综合评价得出计划价值。
 
-在接下来的实验中，v-BDI的价值函数被设定为$\frac{\#goals}{batteryConsumption} - penaltyValue$。\SAN 算法设定为执行100次迭代（$\alpha = 100$），每次迭代执行10次的模拟（$\beta = 10$）。\SAN 的价值函数与v-BDI相同，设定为$\frac{\#goals}{batteryConsumption} - penaltyValue$。
+在接下来的实验中，v-BDI的价值函数被设定为$\frac{\#goals}{batteryConsumption} - penalty$。\SAN 算法设定为执行100次迭代（$\alpha = 100$），每次迭代执行10次的模拟（$\beta = 10$）。\SAN 的价值函数与v-BDI相同，设定为$\frac{\#goals}{batteryConsumption} - penalty$。
 
 与上一章中的实验类似，本章实验考虑了动态与静态环境。以下的实验结果展示的是每种方法运行100次运行次的平均性能。另外，实际上所有方法都可以在实验中实现所有顶层目标。因此，为了便于分析，本实验结果分析中不以完成目标数量为标准对智能体性能进行比较。
 
@@ -79,28 +158,28 @@ $$<C,A,R>$$
 \centering
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_valueY_fixNorms10.pdf}
+  \includegraphics[scale=0.27]{goalsX_valueY_fixNorms10.pdf}
   \captionsetup{justification=centering}
-  \caption{Utility}
+  \caption{价值}
   \label{fig:goalsX_valueY_fixNorms10}
 \end{subfigure}
 
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_consumptionY_fixNorms10.pdf}
+  \includegraphics[scale=0.27]{goalsX_consumptionY_fixNorms10.pdf}
   \captionsetup{justification=centering}
-  \caption{Fuel consumption}
+  \caption{消耗}
   \label{fig:goalsX_consumptionY_fixNorms10}
 \end{subfigure}
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_penaltyY_fixNorms10.pdf}
+  \includegraphics[scale=0.27]{goalsX_penaltyY_fixNorms10.pdf}
   \captionsetup{justification=centering}
-  \caption{Penalty}
+  \caption{惩罚}
   \label{fig:goalsX_penaltyY_fixNorms10}
 \end{subfigure}
 \captionsetup{justification=centering}
-\bicaption{norm数量为10下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#norms 10}
+\bicaption{norm数量为10下的实验结果}{Overall utility, consumption and penalty with fixed \#norms 10}
 \label{fig:all_fixNorms10}
 \end{figure}
 
@@ -112,7 +191,7 @@ $$<C,A,R>$$
 % v-BDI performance
 v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致违反norm的惩罚值。v-BDI始终选择效用值最高的计划执行，从而比NMG违反更少的norm，导致最终获得更高的总价值。
 % MCTS performance
-最后，正如图中所示，MCTS（即\SAN 算法）有相比于NMG和v-BDI有着明显的性能优势。特别是当给定目标数量多时，MCTS与其他方法直接的差异更为显著。这是因为MCTS可以在决策时考虑到norm的影响，并且高效利用不同意图间的协同效应，通过合并不同意图间的相同动作以减少执行次数。这使得智能体有更低的可能性违反norm。与NMG、v-BDI不同，当目标数量增加时，MCTS的性能甚至略有增加（在某些部分）。这是因为在norm的数量较少的情况下（10个norm），目标数量增加时，MCTS可以更好地利用意图间的协同效应，而该协同效应带来的优势克服了违反norm的次数增加带来的危害，从而产生了更高的总价值。然而在后续实验中可以看到，当norm数量较多时，违反norm的危害很难被协同效应所克服。
+最后，正如图中所示，MCTS（即\SAN 算法）有相比于NMG和v-BDI有着明显的性能优势。特别是当给定目标数量多时，MCTS与其他方法直接的差异更为显著。这是因为MCTS可以在决策时考虑到norm的影响，并且高效利用不同意图间的协同效应，通过合并不同意图间的相同动作以减少执行次数。这使得智能体有更低的可能性违反norm。与NMG、v-BDI不同，当目标数量增加时，MCTS的性能甚至略有增加（在一些部分）。这是因为在norm的数量较少的情况下（10个norm），目标数量增加时，MCTS可以更好地利用意图间的协同效应，而该协同效应带来的优势克服了违反norm的次数增加带来的危害，从而产生了更高的总价值。然而在后续实验中可以看到，当norm数量较多时，违反norm的危害很难被协同效应所克服。
 
 % Penalty and consumption
 \paragraph{电量消耗分析}
@@ -129,28 +208,28 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
 \centering
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_valueY_fixNorms30.pdf}
+  \includegraphics[scale=0.27]{goalsX_valueY_fixNorms30.pdf}
   \captionsetup{justification=centering}
-  \caption{Utility}
+  \caption{价值}
   \label{fig:goalsX_valueY_fixNorms30}
 \end{subfigure}
 
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_consumptionY_fixNorms30.pdf}
+  \includegraphics[scale=0.27]{goalsX_consumptionY_fixNorms30.pdf}
   \captionsetup{justification=centering}
-  \caption{Fuel consumption}
+  \caption{消耗}
   \label{fig:goalsX_consumptionY_fixNorms30}
 \end{subfigure}
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_penaltyY_fixNorms30.pdf}
+  \includegraphics[scale=0.27]{goalsX_penaltyY_fixNorms30.pdf}
   \captionsetup{justification=centering}
-  \caption{Penalty}
+  \caption{惩罚}
   \label{fig:goalsX_penaltyY_fixNorms30}
 \end{subfigure}
 \captionsetup{justification=centering}
-\bicaption{norm数量为10下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#norms 30}
+\bicaption{norm数量为10下的实验结果}{Overall utility, consumption and penalty with fixed \#norms 30}
 \label{fig:all_fixNorms30}
 \end{figure}
 
@@ -173,28 +252,28 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
 \centering
 \begin{subfigure}{.47\textwidth}
 \centering
-\includegraphics[scale=0.18]{normsX_valueY_fixGoals10.pdf}
+\includegraphics[scale=0.27]{normsX_valueY_fixGoals10.pdf}
 \captionsetup{justification=centering}
-\caption{Utility}
+\caption{价值}
 \label{fig:normsX_valueY_fixGoals10}
 \end{subfigure}
 
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{normsX_consumptionY_fixGoals10.pdf}
+  \includegraphics[scale=0.27]{normsX_consumptionY_fixGoals10.pdf}
   \captionsetup{justification=centering}
-  \caption{Fuel consumption}
+  \caption{消耗}
   \label{fig:normsX_consumptionY_fixGoals10}
 \end{subfigure}
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{normsX_penaltyY_fixGoals10.pdf}
+  \includegraphics[scale=0.27]{normsX_penaltyY_fixGoals10.pdf}
   \captionsetup{justification=centering}
-  \caption{Penalty}
+  \caption{惩罚}
   \label{fig:normsX_penaltyY_fixGoals10}
 \end{subfigure}
 \captionsetup{justification=centering}
-\bicaption{目标数量为10下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#goals 10}
+\bicaption{目标数量为10下的实验结果}{Overall utility, consumption and penalty with fixed \#goals 10}
 \label{fig:all_fixGoals10}
 \end{figure}
 % Figure info
@@ -208,7 +287,7 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
 图\ref{fig:normsX_consumptionY_fixGoals10} 展示了每种方法在不同norm数量下的平均电量消耗。NMG与v-BDI消耗的电量非常相似，但是由于v-BDI的计划选择机制与NMG不同，导致与NMG相比略有波动。
 
 % MCTS performance
-在所有情况下，与NMG和v-BDI相比，MCTS消耗的电量明显更少。然而，随着norm数量的增加，MCTS的电量消耗有所增加。这是因为MCTS既重视电量消耗，也重视norm的影响。随着norm的数量增加，为了使整体收益最大化，MCTS可能会放弃一些可以利用的意图间协同效应以更好地避免违反norm的情况发生。
+在所有情况下，与NMG和v-BDI相比，MCTS消耗的电量明显更少。然而，随着norm数量的增加，MCTS的电量消耗有所增加。这是因为MCTS既重视电量消耗，也重视norm的影响。随着norm的数量增加，为了使整体收益最大化，MCTS可以放弃一些可以利用的意图间协同效应以更好地避免违反norm的情况发生。
 
 % Penalty
 图\ref{fig:normsX_penaltyY_fixGoals10}展示了不同norm数量下各方法的平均受惩罚值。可以看出，NMG总是受到最多的惩罚值，而MCTS受到的惩罚值则比其他两种方法低很多。当norm数量较大时，不同方法收惩罚值的差异更为明显。当norm的数量为50时，MCTS仅仅受到0.2的惩罚值，而v-BDI几乎是MCTS的3倍，NMG几乎是MCTS的6倍。
@@ -224,28 +303,28 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
 \centering
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_valueY_fixNorms10_dynamic.pdf}
+  \includegraphics[scale=0.27]{goalsX_valueY_fixNorms10_dynamic.pdf}
   \captionsetup{justification=centering}
-  \caption{Utility}
+  \caption{价值}
   \label{fig:goalsX_valueY_fixNorms10_dynamic}
 \end{subfigure}
 
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_consumptionY_fixNorms10_dynamic.pdf}
+  \includegraphics[scale=0.27]{goalsX_consumptionY_fixNorms10_dynamic.pdf}
   \captionsetup{justification=centering}
-  \caption{Fuel consumption}
+  \caption{消耗}
   \label{fig:goalsX_consumptionY_fixNorms10_dynamic}
 \end{subfigure}
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_penaltyY_fixNorms10_dynamic.pdf}
+  \includegraphics[scale=0.27]{goalsX_penaltyY_fixNorms10_dynamic.pdf}
   \captionsetup{justification=centering}
-  \caption{Penalty}
+  \caption{惩罚}
   \label{fig:goalsX_penaltyY_fixNorms10_dynamic}
 \end{subfigure}
 \captionsetup{justification=centering}
-\bicaption{norm数量为10下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#norms 10}
+\bicaption{norm数量为10下的实验结果}{Overall utility, consumption and penalty with fixed \#norms 10}
 \label{fig:all_fixNorms10_dynamic}
 \end{figure}
 
@@ -257,36 +336,34 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
 % penalty
 图\ref{fig:goalsX_penaltyY_fixNorms10_dynamic}展示了各方法所受到的惩罚值。与实验一相比，每种方法所受到的惩罚值几乎没有变化（目标数量相同的情况下）。这表明当前设定下的环境动态性不足以早成显著的惩罚值差异。
 
-\vspace{3cm}
-
 \paragraph{实验五}
 在实验五中，norm的数量被设定为30。其他实验设定与实验四相同。实验结果如图\ref{fig:all_fixNorms30_dynamic}所示。
 \begin{figure}
 \centering
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_valueY_fixNorms30_dynamic.pdf}
+  \includegraphics[scale=0.27]{goalsX_valueY_fixNorms30_dynamic.pdf}
   \captionsetup{justification=centering}
-  \caption{Utility}
+  \caption{价值}
   \label{fig:goalsX_valueY_fixNorms30_dynamic}
 \end{subfigure}
 
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_consumptionY_fixNorms30_dynamic.pdf}
+  \includegraphics[scale=0.27]{goalsX_consumptionY_fixNorms30_dynamic.pdf}
   \captionsetup{justification=centering}
-  \caption{Fuel consumption}
+  \caption{消耗}
   \label{fig:goalsX_consumptionY_fixNorms30_dynamic}
 \end{subfigure}
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{goalsX_penaltyY_fixNorms30_dynamic.pdf}
+  \includegraphics[scale=0.27]{goalsX_penaltyY_fixNorms30_dynamic.pdf}
   \captionsetup{justification=centering}
-  \caption{Penalty}
+  \caption{惩罚}
   \label{fig:goalsX_penaltyY_fixNorms30_dynamic}
 \end{subfigure}
 \captionsetup{justification=centering}
-\bicaption{norm数量为30下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#norms 30}
+\bicaption{norm数量为30下的实验结果}{Overall utility, consumption and penalty with fixed \#norms 30}
 \label{fig:all_fixNorms30_dynamic}
 \end{figure}
 
@@ -299,28 +376,28 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
 \centering
 \begin{subfigure}{.47\textwidth}
 \centering
-\includegraphics[scale=0.18]{intervalX_valueY_fixGoals10.pdf}
+\includegraphics[scale=0.27]{intervalX_valueY_fixGoals10.pdf}
+\caption{价值}
 \captionsetup{justification=centering}
-\caption{Overall utility}
 \label{fig:intervalX_valueY_fixGoals10}
 \end{subfigure}
 
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{intervalX_consumptionY_fixGoals10.pdf}
+  \includegraphics[scale=0.27]{intervalX_consumptionY_fixGoals10.pdf}
+  \caption{消耗}
   \captionsetup{justification=centering}
-  \caption{Fuel consumption}
   \label{fig:intervalX_consumptionY_fixGoals10}
 \end{subfigure}
 \begin{subfigure}{.47\textwidth}
   \centering
-  \includegraphics[scale=0.18]{intervalX_penaltyY_fixGoals10.pdf}
+  \includegraphics[scale=0.27]{intervalX_penaltyY_fixGoals10.pdf}
+  \caption{惩罚}
   \captionsetup{justification=centering}
-  \caption{Penalty}
   \label{fig:intervalX_penaltyY_fixGoals10}
 \end{subfigure}
 \captionsetup{justification=centering}
-\bicaption{目标数量为10且norm数量为30下的实验结果}{Overall utility, fuel consumption and penalty with fixed \#goals 10 and \#norms 30}
+\bicaption{目标数量为10且norm数量为30下的实验结果}{Overall utility, consumption and penalty with fixed \#goals 10 and \#norms 30}
 \label{fig:all_fixGoals10Norms30}
 \end{figure}
 % Figure information

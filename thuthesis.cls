@@ -2964,7 +2964,7 @@
   \else
     \textbf{关键词：}%
   \fi
-  \thu@clist@use{\thu@keywords}{；}%
+  \thu@clist@use{\thu@keywords}{，}%
   \ifthu@degree@bachelor
     \cleardoublepage
   \fi
@@ -2987,7 +2987,7 @@
     \noindent
   \fi
   \textbf{Keywords:}\space
-  \thu@clist@use{\thu@keywords@en}{; }%
+  \thu@clist@use{\thu@keywords@en}{, }%
   \ifthu@degree@graduate
     \vspace*{\stretch{1}}%
   \fi

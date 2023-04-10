@@ -9,8 +9,13 @@
 
 % 关于本文内容
 本文研究了社会仿真模拟场景下的智能体意图调度技术。具体地，本文基于以蒙特卡洛树搜索（Monte-Carlo Tree Search，MCTS）为核心的的智能体意图调度算法\SA，提出三种新的智能体意图调度方法\SAM、\SAN 和\SAT。
-\SAM 一方面继承\SA 的优势，即高效利用不同意图之间的协同效应，有效避免意图间的相互冲突，另一方面可以在决策时考虑维持型目标。\SAN 在决策时加入对norm的考虑，支持在社会规范norm约束下对智能体意图进行调度。
-最后，\SAT 支持线性时序逻辑（Linear Temporal Logic）表示的各类目标和社会准则作为输入对智能体的意图进行调度。本文在火星探测器模拟场景中对\SAM、\SAN 和\SAT 的性能进行实验评估，实验结果表明本研究提出的方法在不同困难的一系列场景中优于其他现有的最先进的方法。
+
+\SAM 一方面继承\SA 的优势，即高效利用不同意图之间的协同效应，有效避免意图间的相互冲突，另一方面可以在决策时考虑维持型目标，使得智能体能够在维持型目标被触发时及时进行修复或在维持型目标被触发前防止其被破坏。
+
+\SAN 在决策时加入对norm的考虑，支持在社会规范norm约束下对智能体意图进行调度，使得智能体在实现目标与避免违法norm相冲突时能够进行合理权衡，在能力范围内做出收益最高的决策。
+
+最后，\SAT 支持线性时序逻辑（Linear Temporal Logic）表示的各类目标和社会准则作为输入对智能体的意图进行调度，使得智能体能够处理多种复杂需求，拓展智能体的适用领域。本文在多种火星探测器模拟场景中对\SAM、\SAN 和\SAT 的性能进行实验评估，实验结果表明本研究提出的方法在不同困难的一系列场景中优于其他现有的最先进的方法。
+
   \thusetup{
     keywords = {BDI智能体, 意图进展问题, 维持型目标, 社会规范, 时序逻辑},
   }
@@ -20,13 +25,20 @@
     An agent is an individual embedded in a specific environment that can act independently to achieve given goals. Multi-Agent System (MAS) realizes distributed intelligence through the interactions between agents, and can be used to solve the problems that a single agent is difficult or even unable to solve.
     It is one of the current research hotspots in the field of artificial intelligence. 
     There are many kinds of agent architectures, among which the Belief-Desire-Intention (BDI) based model is one of the most widely used and studied agent architectures in the current academic community.
-    One of the key advantages of BDI agent is its ability to pursue multiple goals in parallel. When BDI agent situates in a social environment, it may be required to maintain resources above some level in order to operate normally; besides, social norms that regulate the agents' behaviors in the environment can also impact the agents' executions.
-    To adapt in social environments, a rational agent should be able to reason about such social constraints.
+    One of the key advantages of BDI agent is its ability to pursue multiple goals in parallel. In some environments, the agent may be required to maintain resources above some level in order to operate normally, for example, to ensure the power is always sufficient, a Mars rover is required to maintain its battery above certain level during experimental operations; besides, norms in social environments that regulate the agents' behaviors can also impact the agents' behaviors, for example, the agent is prohibited to drive through a red light on the road. However, most research on BDI intelligent agent decision-making currently has overlooked maintenance goals, besides, related research on decision problems under norm constraints has not taken into account the interactions between multiple goals, which limits the application of agents systems in complex scenarios. 
 
     We investigate the technology of scheduling agent intentions when there are maintenance goals and norm constraints. 
     Specifically, based on a heuristic intention scheduler \SA, we propose three kinds of new agent intention schedulers: \SAM, \SAN and \SAT. 
-    On the one hand, it inherits the advantages of \SA, that is, it can effectively use the synergy between different intentions, effectively avoid the conflicts between intentions, and on the other hand, it can consider the maintenance goals in decision-making; \SAN supports the scheduling of agent intentions under the constraints of social norms; Finally, \SAT supports various goals and social norms represented by linear temporal logic formula. 
-    In this paper, the performance of \SAM, \SAN and \SAT are evaluated experimentally in the simulation scenario of the Mars rover. The experimental results show that our approaches are superior to other existing state-of-the-art approaches in a series of difficult scenarios.
+
+   \SAM on the one hand inherits the advantages of \SA, that is, it can effectively use the synergy between different intentions, effectively avoid the conflicts between intentions, and on the other hand, it can consider the maintenance goals in decision-making, enabling the agent to promptly repair maintenance targets when they are triggered or prevent them from being destroyed before they are triggered.
+   
+   \SAN supports the scheduling of agent intentions under the constraints of social norms, enabling the agent to make reason about the trade-offs between achieving goals and avoiding norm violations, and make the most profitable decision within their capabilities.
+   
+   Finally, \SAT supports various goals and social norms represented by linear temporal logic formula, enabling the agent to handle various complex requirements and expand their application areas.
+
+ 
+
+   In this paper, the performance of \SAM, \SAN and \SAT are evaluated experimentally in the simulation scenarios of the Mars rover. The experiment results show that our approaches are superior to other existing state-of-the-art approaches in a series of difficult scenarios.
   \thusetup{
     keywords* = {BDI agent, Intention Progression Problem, Maintenance Goal, Social Norm, Temporal Logic},
   }
