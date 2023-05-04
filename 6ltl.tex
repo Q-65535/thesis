@@ -84,18 +84,18 @@ LTL解析器和转换器已在一些研究中\cite{DBLP:books/daglib/0020982,DBL
 \begin{algorithm} % This algorithm can also be used
 \caption{LTL检查器}\label{checker}
 \begin{algorithmic}[1]
-\STATE input:$(\rho, o)$
+\STATE 输入:$(\rho, o)$
 \STATE $l \gets getLTL(o)$
-\STATE $\alpha \gets transform(l)$ \COMMENT{transform LTL to automaton}
+\STATE $\alpha \gets transform(l)$ \COMMENT{将LTL转换为状态机}
 \FOR{$i \leftarrow 0, len(\rho)-1$}
   \STATE $s \gets si(\rho, i)$
-  \IF {$\alpha.isTransitable(s)$}
+  \IF {$\alpha$ 在 $s$状态下可转移}
     \STATE $\alpha.transit(s)$
     \ELSE
     \STATE $trigger(o)$
   \ENDIF
 \ENDFOR
-\IF {$o$ is an achievement goal and $\alpha$ is in final state}
+\IF {$o$ 为实现型目标且$\alpha$为最终状态}
   \STATE $o.achieved()$
 \ENDIF
 \end{algorithmic}
@@ -109,13 +109,13 @@ LTL解析器和转换器已在一些研究中\cite{DBLP:books/daglib/0020982,DBL
 \begin{algorithm} % This algorithm can also be used
 \caption{触发函数}\label{trigger}
 \begin{algorithmic}[1]
-\STATE input:$(o)$
+\STATE 输入:$(o)$
 
-\IF {$o$ is a maintenance goal and no recover plan is adopted}
-\STATE adopt a recover plan
+\IF {$o$ 为维持型目标且无相关计划在执行}
+\STATE 选择并执行一个相关计划
 \ELSE
-\IF {$o$ is a norm}
-\STATE receive value $o.val$
+\IF {$o$为norm}
+\STATE 获得价值 $o.val$
 \ENDIF
 \ENDIF
 
@@ -228,7 +228,7 @@ LTL解析器和转换器已在一些研究中\cite{DBLP:books/daglib/0020982,DBL
 \end{subfigure}
 \captionsetup{justification=centering}
 \bicaption{复杂地形下的静态场景实验结果}{Experiment results in static complex terrain scenario}
-\label{fig:dynamic_complex}
+\label{fig:static_complex}
 \end{figure}
 从图中可以看出，在电池消耗方面，PMG比v-BDI具有更好的性能。这是因为PMG可以在追求目标之前主动估计电池消耗量。如果实现下一个目标将触发维护目标，智能体将首先前往停车场充电，然后追求下一个目的。这节省了许多执行步骤，从而减少了运行过程中的电池消耗。与v-BDI和PMG相比，MCTS消耗的电池要少得多，因为它不仅可以预测执行过程中可能违反维持条件的情况，还可以利用不同意图之间可能的协同作用（即智能体可以将不同意图的相同动作合并以节省时间和资源）。
 另一方面，随着容量变大，所有方法的电池消耗都会增加。当容量较大时，v-BDI和PMG之间的差异较小，因为增加的容量逐渐超过了在不充电的情况下实现所有目标的需要。容量越大，对智能体的帮助就越小。
@@ -302,7 +302,7 @@ LTL解析器和转换器已在一些研究中\cite{DBLP:books/daglib/0020982,DBL
 \end{subfigure}
 \captionsetup{justification=centering}
 \bicaption{复杂地形下的动态场景实验结果}{Experiment results in dynamic complex terrain scenario}
-\label{fig:static_complex}
+\label{fig:dynamic_complex}
 \end{figure}
 
 

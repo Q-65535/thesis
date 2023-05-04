@@ -48,14 +48,14 @@ $$<C,A,R>$$
 \begin{algorithm}
 \caption{扩展}\label{norm_expand}
 \begin{algorithmic}[1]
-\STATE input:$(n_s)$
+\STATE 输入:$(n_s)$
       \STATE $N \gets \emptyset$
       \STATE $s \gets getState(n_s)$
       \STATE $I \gets getIntentions(s)$
-      \FOR{each $i \in I$}
+      \FOR{对每一个 $i \in I$}
         \STATE $Act \gets getExecutableActions(i)$
-        \FOR{each $a \in Act$}
-          \IF{$a$ does not vioalte any norm}
+        \FOR{对每一个 $a \in Act$}
+          \IF{$a$ 不违反任何norm}
             \STATE $s_e \gets execute(s, a)$
             \STATE $n \gets newNode(s_e)$
             \STATE $N \gets N \cup \{n\}$
@@ -68,7 +68,7 @@ $$<C,A,R>$$
         \ENDFOR
       \ENDFOR
     \STATE $n_s.setChildren(N)$
-    \FOR{each $n_i \in N$}
+    \FOR{对每一个 $n_i \in N$}
     \STATE $n_i.setParent(n_s)$
     \ENDFOR
 \end{algorithmic}
@@ -92,29 +92,29 @@ $$<C,A,R>$$
 \begin{algorithm}[H]
 \caption{模拟}\label{norm_simulate}
 \begin{algorithmic}[1]
-\STATE input:$(n_e)$
+\STATE 输入:$(n_e)$
 \STATE $s \gets getState(n_e)$
 \WHILE{$true$}
   \STATE $I \gets getIntentions(s)$
-  \IF {$I$ is empty}
+  \IF {$I$ 为空}
     \STATE $break$
   \ENDIF
   \STATE $i \gets null$\label{norm_select_intention}
-  \WHILE{$I$ is not empty}
+  \WHILE{$I$ 为空}
     \STATE $i_r \gets random(I)$
     \STATE $I \setminus \{i_r\}$
-    \IF{$i_r$ is executable}
+    \IF{$i_r$ 可被执行}
       \STATE $i \gets i_r$
       \STATE $break$
     \ENDIF
   \ENDWHILE
-  \IF{$i$ is $null$}
+  \IF{$i$ 为 $null$}
     \STATE $break$
   \ENDIF
   \STATE $g \gets getGoal(i)$
   \STATE $Act \gets getExecutableActions(i)$
   \STATE $a \gets null$
-  \WHILE{$Act$ is not empty}
+  \WHILE{$Act$ 不为空}
     \STATE $a_r \gets random(Act)$
     \STATE $Act \setminus \{a_r\}$
     \IF {$penalty(i)+penalty(a) < value(g)$}
@@ -122,8 +122,8 @@ $$<C,A,R>$$
       \STATE $break$
     \ENDIF
   \ENDWHILE
-  \IF{$a$ is $null$}
-    \STATE go to line \ref{norm_select_intention}
+  \IF{$a$ 为 $null$}
+    \STATE 返回第 \ref{norm_select_intention}行
   \ENDIF
   \STATE $s \gets execute(s, a)$
 \ENDWHILE
@@ -415,4 +415,4 @@ v-BDI具有比NMG更好的性能表现，因为其可以评估执行计划导致
 本章提出了一种基于\SA 的意图调度算法\SAN 。\SAN 可以在norm约束下对智能体进行意图调度。另外，基于火星探测器的模拟场景，本章在静态环境以及动态环境下对\SAN 的性能进行了分析。实验结果表明\SAN 与其他方法（NMG和v-BDI）相比有着显著的性能优势。即使在norm的数量非常多时，\SAN 仍然可以可靠地地避免对norm
 的违反同时高效利用多个并发意图之间的协同效应，最终得到较高的整体价值收益。
 
-本文的下一章将考虑如何基于时序逻辑（Linear Temporal Logic，LTL），并将其与MCTS算法有效结合，使得智能体同时处理实现型目标、维持型目标以及norm；并且提高智能体的可扩展性，允许智能体处理各种类型的用LTL表示的目标和norm。
+本文的下一章将研究如何基于时序逻辑（Linear Temporal Logic，LTL），对智能体的意图进行调度，使得智能体能够同时处理实现型目标、维持型目标以及norm；并且提高智能体的可扩展性，允许智能体处理各种类型的用LTL表示的目标和norm。

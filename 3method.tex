@@ -85,7 +85,7 @@ Yao等人提出基于蒙特卡洛树搜索的\SA \cite{DBLP:conf/atal/YaoL16}算
 \caption{返回当前周期执行的动作}\label{alg:SA}
   \begin{algorithmic}[1]
     % \PROCEDURE{$SA(I, E,\alpha,\beta)$}{}
-    \STATE input:$(I, E,\alpha,\beta)$
+    \STATE 输入:$(I, E,\alpha,\beta)$
     \STATE $n_0 \gets node_0(I,E)$ \label{root}
     \FOR{$i \gets 1,\alpha$} \label{iteration begin}
       \STATE $n_e \gets MAX-UCT-LEAF-NODE(n_0)$ \label{selection}
@@ -99,7 +99,7 @@ Yao等人提出基于蒙特卡洛树搜索的\SA \cite{DBLP:conf/atal/YaoL16}算
       \STATE $V_{best} \gets maxValue(S)$
       \STATE $BACKUP(n_s, V_{best})$ \label{back}
       \ENDFOR \label{iteration end}
-      \STATE \RETURN $BEST-NEXT-STEP(n_0, f_b)$
+      \STATE \RETURN 最优下一步决策 $BEST-NEXT-STEP(n_0, f_b)$
     % \ENDPROCEDURE
   \end{algorithmic}
 \end{algorithm}

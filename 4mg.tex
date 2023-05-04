@@ -55,16 +55,16 @@ $$<G_m,C_m,Pls,t>$$
 \begin{algorithm}[H]
 \caption{扩展}\label{mg_expand}
 \begin{algorithmic}[1]
-\STATE input:$(n_s)$
+\STATE 输入:$(n_s)$
       \STATE $N \gets \emptyset$
       \STATE $s \gets getState(n_s)$
       \STATE $I \gets getIntentions(s)$
       \STATE $G_m \gets getMaintenanceGoals(s)$
-      \FOR{each $g \in G_m$}
-      \IF{one recovery plan for $g$ is already adopted}
+      \FOR{对每一个 $g \in G_m$}
+      \IF{已经有一个和 $g$ 相关的计划在执行}
         \STATE $continue$
       \ENDIF
-      \IF{$reactive(g)$ and $violated(g, s)$}
+      \IF{$reactive(g)$ 并且 $violated(g, s)$}
         \STATE $I \gets newIntention(g)$
       \ENDIF
       \IF{$proactive(g)$}
@@ -72,13 +72,13 @@ $$<G_m,C_m,Pls,t>$$
       \ENDIF
     \ENDFOR
     \STATE $Act \gets getExecutableActions(I)$
-    \FOR{each $a \in Act$}
+    \FOR{对每一个 $a \in Act$}
       \STATE $s_e \gets execute(s, a)$
       \STATE $n \gets newNode(s_e)$
       \STATE $N \gets N \cup \{n\}$
     \ENDFOR
     \STATE $n_s.setChildren(N)$
-    \FOR{each $n_i \in N$}
+    \FOR{对每一个 $n_i \in N$}
     \STATE $n_i.setParent(n_s)$
     \ENDFOR
 \end{algorithmic}
@@ -102,34 +102,34 @@ $$<G_m,C_m,Pls,t>$$
 \begin{algorithm}[H]
 \caption{模拟}\label{mg_simulate}
 \begin{algorithmic}[1]
-\STATE input:$(n_e)$
+\STATE 输入:$(n_e)$
 \STATE $s \gets getState(n_e)$
 
 \WHILE{$true$}
   \STATE $I \gets getIntentions(s)$
   \STATE $G_m \gets getMaintenanceGoals(s)$
-  \FOR{each $g \in G_m$}
-    \IF {$isReactive(g)$ and $isViolate(g, s)$}
+  \FOR{对每一个 $g \in G_m$}
+    \IF {$reactive(g)$ 且 $isViolate(g, s)$}
       \STATE $I \cup \{newIntention(g)\}$
     \ENDIF
-    \IF {$isProactive(g)$}
+    \IF {$proactive(g)$}
       \STATE $I \cup \{newIntention(g)\}$
     \ENDIF
 \ENDFOR
 
-\IF {$I$ is empty}
+\IF {$I$ 为空}
   \STATE $break$
 \ENDIF
   \STATE $i \gets null$\label{mg_select_intention}
-  \WHILE{$I$ is not empty}
+  \WHILE{$I$ 不为空}
     \STATE $i_r \gets random(I)$
     \STATE $I \setminus \{i_r\}$
-    \IF{$i_r$ is executable}
+    \IF{$i_r$ 可执行}
       \STATE $i \gets i_r$
       \STATE $break$
     \ENDIF
   \ENDWHILE
-  \IF{$i$ is $null$}
+  \IF{$i$ 为 $null$}
     \STATE $break$
   \ENDIF
   \STATE $a \gets randomExecutableAction(i)$
@@ -306,5 +306,4 @@ NMG，RMG和PMG的性能保持不变，而基于MCTS的方法则有较为明显�
 图\ref{fig:dynamic3}展示了每个方法的平均电量消耗。从图中可得知，基于MCTS方法的性能表现依然要优于其他非MCTS方法。然而，当时间间隔$n$增大时，MCTS是方法的优势越来越低。这是因为当$n$较大时，同时执行的目标数量少，MCTS方法更难以利用不同意图之间的协同效应，致使性能下降；而在$n$较小时，并发执行的意图较多，智能体可以高效利用他们之间的协同效应。当时间间隔被设定为15时，智能体在大多是情况下运行时只有一个目标，因此，MCTS的性能与其他方法非常接近。
 \section{本章总结}
 本章提出了一种基于\SA 的意图调度算法\SAM 。\SAM 可以同时对实现型和维持型目标进行意图调度。另外，基于火星探测器的模拟场景，本章在静态环境以及动态环境下对\SAM 的性能进行了分析。实验结果表明\SAM 与其他方法（RMG和PMG）相比有着显著的性能优势。即使在没有可靠的预测机制的情况下，\SAM 对被动维持型目标的调度性能表现依旧要优于其他非MCTS方法。\SAM 算法的主要优势有2个：1.避免维持型目标和实现型目标间的相互冲突；2.对多个意图进行交错执行以避免相互冲突并利用其协同效应。
-
-本文的下一章将考虑如何基于\SA，在norm约束场景下对智能体意图进行合理调度。
+本文的下一章将研究如何在norm约束场景下对智能体意图进行调度。

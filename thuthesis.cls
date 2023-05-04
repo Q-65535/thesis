@@ -481,7 +481,7 @@
       \ifthu@degree@graduate
         \def\contentsname{目\quad 录}%
         \def\thu@denotation@name{符号和缩略语说明}%
-        \def\thu@resume@name{个人简历、在学期间完成的相关学术成果}%
+        \def\thu@resume@name{作者简介}%
       \else  % degree = postdoc
         \def\contentsname{目\qquad 次}%
         \def\thu@denotation@name{符号表}%
@@ -1746,7 +1746,7 @@
   \newcommand{\thu@abstract@name@en}{ABSTRACT}
 \else
   \newcommand{\thu@abstract@name}{摘\quad 要}
-  \newcommand{\thu@abstract@name@en}{Abstract}
+  \newcommand{\thu@abstract@name@en}{ABSTRACT}
 \fi
 \ctexset{%
   chapter = {
