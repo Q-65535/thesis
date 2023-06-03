@@ -1,5 +1,5 @@
 \chapter{以LTL对象为输入的意图调度算法}\label{ltl}
-本章在\SA 的基础之上进行拓展，提出一种同时支持实现型目标、维持型目标以及norm的意图调度算法\SAT ，\SAT 接收以LTL表示的各类目标和norm（称为LTL对象）并根据与其等价的状态机变化进行意图调度以满足LTL公式所指定的需求。 本章实验部分对\SAT 的性能表现在不同的资源储备量下进行了分析，并与Duff等人提出的PMG\cite{DBLP:conf/atal/DuffHT06}算法和Meneguzzi等人提出的v-BDI算法\cite{DBLP:journals/eaai/MeneguzziROVL15}进行了比较，实验结果表明\SAT 的性能表现相对PMG和v-BDI有显著优势\footnote{在前两章中，本文分别将\SAM 与PMG进行对比，将\SAN 与v-BDI进行对比。}。
+本章提出一种同时支持实现型目标、维持型目标以及norm的意图调度算法\SAT ，\SAT 接收以LTL表示的各类目标和norm（称为LTL对象）作为需求描述，并根据与其等价的状态机进行意图调度以满足LTL公式所指定的需求。 本章实验部分对\SAT 的性能表现在不同的资源储备量下进行了分析，并与Duff等人提出的PMG\cite{DBLP:conf/atal/DuffHT06}算法和Meneguzzi等人提出的v-BDI算法\cite{DBLP:journals/eaai/MeneguzziROVL15}进行了比较，实验结果表明\SAT 的性能表现相对PMG和v-BDI有显著优势\footnote{在前两章中，本文分别将\SAM 与PMG进行对比，将\SAN 与v-BDI进行对比。}。
 \section{多种类型的目标与Norm}
 在许多社会仿真场景中，目标可以有丰富的类型，例如需要智能体在一段时间内保持某一特定状态的维持型目标，或是在一些特定情况下，只有在满足某些特定条件时才最求的条件目标。此外，智能体的行为会受到norm的约束，智能体需要在决策时加入对norm的考虑，以避免违反norm，或者选择性地违反norm以实现更重要的目标。本文第\ref{mg}章研究了了如何同时对实现型目标和维持型目标进行意图调度，并提出了\SAM 算法；第\ref{norm}章研究了了如何在norm约束下进行意图调度，并提出了\SAN 算法。本章考虑更为实际的社会仿真模拟场景：在本章中，各种类型的目标与norm统一以线性时序逻辑（Linear Temporal Logic， LTL）的形式表示，而智能体需要对LTL表示的目标或norm进行意图调度。
 
